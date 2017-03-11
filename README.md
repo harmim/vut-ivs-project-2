@@ -9,4 +9,4 @@ Windows 64bit
 - xhertl04 Vojtěch Hertl
 
 ### License
-This program is distributed under a [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/).
+This program is distributed under a [GNU General Public License v3.0](LICENSE).
