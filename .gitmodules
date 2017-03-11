@@ -1,0 +1,4 @@
+[submodule "doc"]
+	path = doc
+	url = git@github.com:harmim/vut-ivs-project-2.wiki.git
+	ignore = dirty
