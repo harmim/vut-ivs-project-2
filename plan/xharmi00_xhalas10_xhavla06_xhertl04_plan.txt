@@ -51,22 +51,22 @@
 
 3. Communication channels and rules
 	- For communication, we are using Slack (https://slack.com/). We created team Disassembler on Slack, where
-		we are able to private communicate. We also created chanels by communication purpose. We created chanel
-		github where github-bot automatically notified us about actions in repository.
+		we are able to have private communications. We also created channels by communication purpose. We created channel
+		github where github-bot automatically notifies us about actions we make in repository.
 	- Everyone working on the project must be online on Slack.
 	- In Slack profiles of team members, there are phone numbers, so in extreme cases, we can call.
 
 4. Selected VSC and hosting for remote repository
 	- VCS: Git.
-	- hosting: https://github.com/.
+	- Hosting: https://github.com/.
 	- Our repository is https://github.com/harmim/vut-ivs-project-2 owned by team leader Dominik Harmim
 		(xharmi00). We added user ivskontrola (https://github.com/ivskontrola) to repository as
-		collaborator, so this user can check this repository after accept invitation.
+		collaborator, so this user can check this repository after he accepts an invitation.
 
 ---------------------------------------------------------------------------------------------------------------
 
 *1, *2:
-	- We created project plan in GitHub projects. You can check deadlines and allocation of tasks to
+	- We created a project plan in GitHub projects. You can check deadlines and allocation of tasks to
 	the individual project solvers in our GitHub repository, ivskontrola have access to this repository,
 	see point 4. It is project with name "Creation calculator".
 	File xharmi00_xhalas10_xhavla06_xhertl04_plan_github_project.jpg is illustration of this plan on GitHub
