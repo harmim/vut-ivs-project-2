@@ -1,0 +1,73 @@
+1. Deadlines
+	- 10.3.2017 (Project plan)
+	- 13.3.2017 (Create readme file, Initialize project in Visual Studio (C# .NET WPF))
+	- 17.3.2017 (Create interface for math library, GUI interface)
+	- 24.3.2017 (Create tests for math library by Interface IMath)
+	- 31.3.2017 (Implementation of math library by interface IMath and Tests)
+	- 7.4.2017 (Standard deviation, Link GUI Interface with Math library)
+	- 14.4.2017 (Program documentation in Doxygen, Mockup GUI, Application un/installer, Profiling
+		standard deviation)
+	- 21.4.2017 (User documentation, Create Makefile)
+	- 24.4.2017 (Create rating of team members hodnoceni.txt, Report about differences between the
+		project and reality reality.txt, Create file odevzdani.txt)
+	- 2.5.2017 (Create files xloginNN_problemy.txt, PDF presentation)
+
+2. Allocation of tasks to the individual project solvers
+	- xharmi00 Dominik Harmim
+		- Project plan
+		- Initialize project in Visual Studio (C# .NET WPF)
+		- Create tests for math library by Interface IMath
+		- Standard deviation
+		- Link GUI Interface with Math library
+		- Profiling standard deviation
+		- Create Makefile
+
+	- xhalas10 Timotej Halás
+		- GUI interface
+		- Implementation of math library by interface IMath and Tests
+		- Link GUI Interface with Math library
+		- Program documentation in Doxygen
+
+	- xhavla06 Matej Havlas
+		- Implementation of math library by interface IMath and Tests
+		- Link GUI Interface with Math library
+		- Mockup GUI
+		- User documentation
+
+	- xhertl04 Vojtěch Hertl
+		- Create readme file
+		- Create interface for math library
+		- Create tests for math library by Interface IMath
+		- Link GUI Interface with Math library
+		- Standard deviation
+		- Application un/installer
+
+	- together tasks
+		- Create rating of team members hodnoceni.txt
+		- Report about differences between the project and reality reality.txt
+		- Create file odevzdani.txt
+		- Create files xloginNN_problemy.txt
+		- PDF presentation
+
+3. Communication channels and rules
+	- For communication, we are using Slack (https://slack.com/). We created team Disassembler on Slack, where
+		we are able to have private communications. We also created channels by communication purpose. We created channel
+		github where github-bot automatically notifies us about actions we make in repository.
+	- Everyone working on the project must be online on Slack.
+	- In Slack profiles of team members, there are phone numbers, so in extreme cases, we can call.
+
+4. Selected VSC and hosting for remote repository
+	- VCS: Git.
+	- Hosting: https://github.com/.
+	- Our repository is https://github.com/harmim/vut-ivs-project-2 owned by team leader Dominik Harmim
+		(xharmi00). We added user ivskontrola (https://github.com/ivskontrola) to repository as
+		collaborator, so this user can check this repository after he accepts an invitation.
+
+---------------------------------------------------------------------------------------------------------------
+
+*1, *2:
+	- We created a project plan in GitHub projects. You can check deadlines and allocation of tasks to
+	the individual project solvers in our GitHub repository, ivskontrola have access to this repository,
+	see point 4. It is project with name "Creation calculator".
+	File xharmi00_xhalas10_xhavla06_xhertl04_plan_github_project.jpg is illustration of this plan on GitHub
+	project.
