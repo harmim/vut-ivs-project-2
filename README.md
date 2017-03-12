@@ -1,4 +1,4 @@
-### Environment
+### Platforms
 Windows 64bit
 
 ### Authors
