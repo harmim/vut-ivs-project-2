@@ -7,9 +7,9 @@
 		Title="Calculator" Height="460.461" Width="299.113">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="56*"/>
-			<ColumnDefinition Width="31*"/>
-			<ColumnDefinition Width="430*"/>
+			<ColumnDefinition Width="56*" />
+			<ColumnDefinition Width="31*" />
+			<ColumnDefinition Width="430*" />
 		</Grid.ColumnDefinitions>
 
 	</Grid>
