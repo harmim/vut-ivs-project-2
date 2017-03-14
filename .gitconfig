@@ -1,0 +1,16 @@
+[alias]
+	logd = log --decorate --source --graph --all
+
+[push]
+	default = simple
+
+[pull]
+	rebase = true
+
+[diff]
+	compactionHeuristic = true
+
+[core]
+	eol = lf
+	autocrlf = input
+	filemode = false
