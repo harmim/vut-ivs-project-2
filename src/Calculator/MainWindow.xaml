@@ -137,8 +137,8 @@
 				 FontFamily="/Calculator;component/NewFolder1/#Roboto Thin" FontSize="22" BorderThickness="0"
 				 Padding="10,0" SelectionBrush="#FF9E9E9E" VerticalContentAlignment="Bottom" Foreground="#89000000"
 				 MaxLines="1" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="TextLog_PreviewMouseWheel"
-				 HorizontalContentAlignment="Right" Text="5 + 5" />
-        <TextBox x:Name="TextAns" Grid.ColumnSpan="4" Grid.Row="2" TextWrapping="Wrap" Text="10" IsReadOnly="True"
+				 HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="TextAns" Grid.ColumnSpan="4" Grid.Row="2" TextWrapping="Wrap" Text="0" IsReadOnly="True"
 				 FontFamily="/Calculator;component/NewFolder1/#Roboto Thin" FontSize="36"
 				 HorizontalContentAlignment="Right" BorderThickness="0" Padding="10,0" SelectionBrush="#FF9E9E9E"
 				 Foreground="#DD000000" MaxLines="1" MaxLength="15" VerticalScrollBarVisibility="Disabled" />
