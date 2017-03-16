@@ -25,18 +25,18 @@ namespace Disassembler
 		/// <summary>
 		/// Substracts two numbers.
 		/// </summary>
-		/// <param name="num1">Minuend.</param>
-		/// <param name="num2">Subtrahend.</param>
+		/// <param name="minuend">Minuend.</param>
+		/// <param name="subtrahend">Subtrahend.</param>
 		/// <returns>The result of the substraction.</returns>
-		double sub(double num1, double num2);
+		double sub(double minuend, double subtrahend);
 
-        /// <summary>
-        /// Divides two numbers.
-        /// </summary>
-        /// <param name="num1">Divident.</param>
-        /// <param name="num2">Divisor. num2 in R-{0}</param>
-        /// <returns>The result of the division.</returns>
-        double div(double num1, double num2);
+		/// <summary>
+		/// Divides two numbers.
+		/// </summary>
+		/// <param name="divident">Divident.</param>
+		/// <param name="divisor">Divisor.</param>
+		/// <returns>The result of the division.</returns>
+		double div(double divident, double divisor);
 
 		/// <summary>
 		/// Multiplies two numbers.
@@ -47,34 +47,34 @@ namespace Disassembler
 		double mult(double num1, double num2);
 
 		/// <summary>
-		/// Cumputes a factorial.
+		/// Computes a factorial from a number.
 		/// </summary>
-		/// <param name="num">Factoriated number. num in N</param>
+		/// <param name="num">Factoriated number.</param>
 		/// <returns>Factorial from the number.</returns>
-		long fact(long num);
+		ulong fact(ushort num);
 
 		/// <summary>
 		/// Exponentiation with general exponent.
 		/// </summary>
-		/// <param name="num1">Base. num1 in (0,inf)-{1} </param>
-		/// <param name="num2">Exponent. num2 in (0,inf)</param>
-		/// <returns>The power.</returns>
-		double exp(double num1, double num2);
+		/// <param name="basis">Base.</param>
+		/// <param name="exponent">Exponent.</param>
+		/// <returns>Returns a specified number raised to the specified power.</returns>
+		double pow(double basis, double exponent);
 
 		/// <summary>
 		/// Root with general degree.
 		/// </summary>
-		/// <param name="num1">Radicand. num1 in (0,inf)</param>
-		/// <param name="num2">Degree. num2 in (0,inf)</param>
-		/// <returns>The root.</returns>
-		double sqrt(double num1, double num2);
+		/// <param name="radicand">Radicand.</param>
+		/// <param name="degree">Degree.</param>
+		/// <returns>Returns the n-th root of a specified number.</returns>
+		double root(double radicand, double degree);
 
 		/// <summary>
 		/// Logarithm with general base.
 		/// </summary>
-		/// <param name="num1">Base. num1 in (0,inf)-{1}</param>
-		/// <param name="num2">Antilogarthm. num2 in (0,inf)</param>
-		/// <returns>The logarithm.</returns>
-		double log(double num1, double num2);
+		/// <param name="basis">Base.</param>
+		/// <param name="antilogarithm">Antilogarithm.</param>
+		/// <returns>Returns the logarithm of a specified number in a specified base.</returns>
+		double log(double basis, double antilogarithm);
 	}
 }
