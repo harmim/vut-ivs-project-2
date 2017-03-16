@@ -1,8 +1,17 @@
+﻿<!--**************************************************************
+	* Team:      Disassembler
+	* 
+	* Authors:   Vojtìch Hertl <xhertl04@stud.fit.vutbr.cz>
+	*            Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
+	*            Timotej Halás <xhalas10@stud.fit.vutbr.cz>
+	*            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
+	**************************************************************/-->
+
 <Application x:Class="Calculator.App"
-			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			xmlns:local="clr-namespace:Calculator"
-			StartupUri="MainWindow.xaml">
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="clr-namespace:Calculator"
+			 StartupUri="MainWindow.xaml">
 	<Application.Resources>
 
 	</Application.Resources>
