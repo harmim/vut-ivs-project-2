@@ -1,16 +1,146 @@
+﻿<!--**************************************************************
+	* Team:      Disassembler
+	* 
+	* Authors:   Vojtìch Hertl <xhertl04@stud.fit.vutbr.cz>
+	*            Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
+	*            Timotej Halás <xhalas10@stud.fit.vutbr.cz>
+	*            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
+	**************************************************************/-->
+
 <Window x:Class="Calculator.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
-		Title="Calculator" Height="460.461" Width="299.113">
-	<Grid>
+		Title="Calculator" Height="457" Width="176" MinWidth="350" MinHeight="566" WindowStartupLocation="CenterScreen"
+		KeyDown="Window_KeyDown" ScrollViewer.VerticalScrollBarVisibility="Disabled" Icon="Assets/Icon.ico">
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="18" />
+			<RowDefinition Height="7*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="8*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="10*" />
+			<RowDefinition Height="10*" />
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="56*" />
-			<ColumnDefinition Width="31*" />
-			<ColumnDefinition Width="430*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-
+		<Menu Grid.ColumnSpan="4" Height="18" VerticalAlignment="Top" Background="White">
+			<MenuItem x:Name="AboutItem" Header="About" Click="AboutItem_Click" Foreground="#DD000000" />
+		</Menu>
+		<Button x:Name="ButtonFact" Content="!" Grid.Column="0" Grid.Row="4" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonFact_Click" />
+		<Button x:Name="ButtonExp" Content="^" Grid.Column="1" Grid.Row="4" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonExp_Click" />
+		<Button x:Name="ButtonSqrt" Content="√" Grid.Column="2" Grid.Row="4" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonSqrt_Click" />
+		<Button x:Name="ButtonLog" Content="log" Grid.Column="3" Grid.Row="4" FontFamily="./#Roboto Light"
+				FontSize="31" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonLog_Click" />
+		<Button x:Name="ButtonBack" Grid.Column="0" Grid.Row="5" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" BorderThickness="0" Background="#FF1DE9B6" Content="←" Click="ButtonBack_Click" />
+		<Button x:Name="ButtonCE" Content="CE" Grid.Column="1" Grid.Row="5" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonCE_Click" />
+		<Button x:Name="ButtonC" Content="C" Grid.Column="2" Grid.Row="5" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonC_Click" />
+		<Button x:Name="ButtonInv" Content="±" Grid.Column="3" Grid.Row="5" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="#DD000000" Background="#FF1DE9B6" BorderThickness="0" Click="ButtonInv_Click" />
+		<Button x:Name="Button7" Content="7" Grid.Column="0" Grid.Row="6" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button7_Click" />
+		<Button x:Name="Button8" Content="8" Grid.Column="1" Grid.Row="6" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button8_Click" />
+		<Button x:Name="Button9" Content="9" Grid.Column="2" Grid.Row="6" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button9_Click" />
+		<Button x:Name="ButtonDiv" Content="÷" Grid.Column="3" Grid.Row="6" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF616161" BorderThickness="0" Click="ButtonDiv_Click" />
+		<Button x:Name="Button4" Content="4" Grid.Column="0" Grid.Row="7" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button4_Click" />
+		<Button x:Name="Button5" Content="5" Grid.Column="1" Grid.Row="7" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button5_Click" />
+		<Button x:Name="Button6" Content="6" Grid.Column="2" Grid.Row="7" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button6_Click" />
+		<Button x:Name="ButtonMul" Content="×" Grid.Column="3" Grid.Row="7" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF616161" BorderThickness="0" Click="ButtonMul_Click" />
+		<Button x:Name="Button1" Content="1" Grid.Column="0" Grid.Row="8" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button1_Click" />
+		<Button x:Name="Button2" Content="2" Grid.Column="1" Grid.Row="8" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button2_Click" />
+		<Button x:Name="Button3" Content="3" Grid.Column="2" Grid.Row="8" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button3_Click" />
+		<Button x:Name="ButtonMinus" Content="−" Grid.Column="3" Grid.Row="8" FontFamily="./#Roboto Light"
+				FontSize="31" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="White" Background="#FF616161" BorderThickness="0" Click="ButtonMinus_Click" />
+		<Button x:Name="ButtonComma" Content="," Grid.Column="0" Grid.Row="9" FontFamily="./#Roboto Light"
+				FontSize="31" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0"
+				Foreground="White" Background="#FF757575" BorderThickness="0" Click="ButtonComma_Click" />
+		<Button x:Name="Button0" Content="0" Grid.Column="1" Grid.Row="9" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="Button0_Click" />
+		<Button x:Name="ButtonAns" Content="=" Grid.Column="2" Grid.Row="9" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF757575" BorderThickness="0" Click="ButtonAns_Click" />
+		<Button x:Name="ButtonPlus" Content="+" Grid.Column="3" Grid.Row="9" FontFamily="./#Roboto Light" FontSize="31"
+				VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Foreground="White"
+				Background="#FF616161" BorderThickness="0" Click="ButtonPlus_Click" />
+		<Grid Grid.ColumnSpan="4" Grid.Row="3" ShowGridLines="False">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Button x:Name="ButtonMC" Content="MC" Grid.Column="0" FontFamily="./#Roboto Light" FontSize="24"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1"
+					Foreground="#DD000000" Background="#FF00BFA5" BorderThickness="0" Click="ButtonMC_Click" />
+			<Button x:Name="ButtonMR" Content="MR" Grid.Column="1" FontFamily="./#Roboto Light" FontSize="24"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1"
+					Foreground="#DD000000" Background="#FF00BFA5" BorderThickness="0" Click="ButtonMR_Click" />
+			<Button x:Name="ButtonMPlus" Content="M+" Grid.Column="2" FontFamily="./#Roboto Light" FontSize="24"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1"
+					Foreground="#DD000000" Background="#FF00BFA5" BorderThickness="0" Click="ButtonMPlus_Click" />
+			<Button x:Name="ButtonMMinus" Content="M-" Grid.Column="3" FontFamily="./#Roboto Light" FontSize="24"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1"
+					Foreground="#DD000000" Background="#FF00BFA5" BorderThickness="0" Click="ButtonMMinus_Click" />
+			<Button x:Name="ButtonMSet" Content="MS" Grid.Column="4" FontFamily="./#Roboto Light" FontSize="24"
+					VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="1"
+					Foreground="#DD000000" Background="#FF00BFA5" BorderThickness="0" Click="ButtonMSet_Click" />
+		</Grid>
+		<TextBox x:Name="TextLog" Grid.ColumnSpan="4" Grid.Row="1" IsReadOnly="True"
+				 FontFamily="/Calculator;component/NewFolder1/#Roboto Thin" FontSize="22" BorderThickness="0"
+				 Padding="10,0" SelectionBrush="#FF9E9E9E" VerticalContentAlignment="Bottom" Foreground="#89000000"
+				 MaxLines="1" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="TextLog_PreviewMouseWheel"
+				 HorizontalContentAlignment="Right"/>
+		<TextBox x:Name="TextAns" Grid.ColumnSpan="4" Grid.Row="2" TextWrapping="Wrap" Text="0" IsReadOnly="True"
+				 FontFamily="/Calculator;component/NewFolder1/#Roboto Thin" FontSize="36"
+				 HorizontalContentAlignment="Right" BorderThickness="0" Padding="10,0" SelectionBrush="#FF9E9E9E"
+				 Foreground="#DD000000" MaxLines="1" MaxLength="15" VerticalScrollBarVisibility="Disabled" />
 	</Grid>
 </Window>
