@@ -109,22 +109,22 @@ namespace Calculator
 
 		private void ButtonPlus_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog(" + ");
+			PrintLog("+");
 		}
 
 		private void ButtonMinus_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog(" - ");
+			PrintLog("-");
 		}
 
 		private void ButtonMul_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog(" * ");
+			PrintLog("×");
 		}
 
 		private void ButtonDiv_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog(" / ");
+			PrintLog("÷");
 		}
 
 		private void ButtonBack_Click(object sender, RoutedEventArgs e)
@@ -210,26 +210,26 @@ namespace Calculator
 			if (e.Key == Key.Decimal)
 				PrintComma();
 			if (e.Key == Key.Add)
-				PrintLog(" + ");
+				PrintLog("+");
 			if (e.Key == Key.Subtract)
-				PrintLog(" - ");
+				PrintLog("-");
 			if (e.Key == Key.Multiply)
-				PrintLog(" * ");
+				PrintLog("×");
 			if (e.Key == Key.Divide)
-				PrintLog(" / ");
+				PrintLog("÷");
 			if (e.Key == Key.Back)
 				Backspace();
 			if (e.Key == Key.Enter)
 				Enter();
 		}
 
-	    private void PrintComma()
-	    {
-	        if (!TextAns.Text.Contains(",") && !IsAnswer)
-	            TextAns.Text += ",";
-	    }
+		private void PrintComma()
+		{
+			if (!TextAns.Text.Contains(",") && !IsAnswer)
+				TextAns.Text += ",";
+		}
 
-	    private void PrintNumAns(string number)
+		private void PrintNumAns(string number)
 		{
 			if (TextAns.Text.Length < 16)
 			{
@@ -243,9 +243,15 @@ namespace Calculator
 
 		private void PrintLog(string operation)
 		{
+			if (TextLog.Text.EndsWith(" ") && IsAnswer)
+			{
+				TextLog.Text = TextLog.Text.Remove(TextLog.Text.Length - 2);
+				TextLog.Text = TextLog.Text.Insert(TextLog.Text.Length, operation + " ");
+				PrintAns("ans");
+			}
 			if (!IsAnswer)
 			{
-				TextLog.Text += TextAns.Text + operation;
+				TextLog.Text += TextAns.Text + " " + operation + " ";
 				PrintAns("ans");
 			}
 			TextLog.CaretIndex = TextLog.Text.Length;
@@ -273,6 +279,5 @@ namespace Calculator
 			TextLog.Text = "";
 			PrintAns("ans");
 		}
-
 	}
 }
