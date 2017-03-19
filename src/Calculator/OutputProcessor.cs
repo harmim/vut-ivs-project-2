@@ -38,6 +38,9 @@ namespace Disassembler.Calculator
 		// indicates whether the result is displayed
 		public bool IsAnswer { get; set; } = true;
 
+		// indicates whether the memory operator is used
+		public bool IsMemoryOperator { get; set; } = true;
+
 		/// <summary>
 		///     OutputProcessor construct.
 		/// </summary>
@@ -99,7 +102,7 @@ namespace Disassembler.Calculator
 				this.textAns.FontSize = TextAnsBasicFontSize;
 			}
 
-			if (this.textAns.Text == "0" || this.IsAnswer)
+			if (this.textAns.Text == "0" || this.IsAnswer || this.IsMemoryOperator)
 			{
 				this.textAns.Text = number;
 			}
@@ -110,6 +113,7 @@ namespace Disassembler.Calculator
 
 			this.textAns.Text = this.FormatNumericValue(this.textAns.Text);
 			this.IsAnswer = false;
+			this.IsMemoryOperator = false;
 
 			return true;
 		}

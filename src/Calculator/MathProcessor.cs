@@ -93,6 +93,7 @@ namespace Disassembler.Calculator
 			this.memory += value;
 			clear.IsEnabled = true;
 			reset.IsEnabled = true;
+			this.outputProcessor.IsMemoryOperator = true;
 		}
 
 		/// <summary>
@@ -107,6 +108,7 @@ namespace Disassembler.Calculator
 			this.memory -= value;
 			clear.IsEnabled = true;
 			reset.IsEnabled = true;
+			this.outputProcessor.IsMemoryOperator = true;
 		}
 
 		/// <summary>
@@ -120,6 +122,7 @@ namespace Disassembler.Calculator
 			this.memory = value;
 			clear.IsEnabled = true;
 			reset.IsEnabled = true;
+			this.outputProcessor.IsMemoryOperator = true;
 		}
 
 		/// <summary>
