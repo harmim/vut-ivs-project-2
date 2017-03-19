@@ -63,6 +63,12 @@ namespace Disassembler.Calculator
 		/// <returns>True, if number was printed, false otherwise.</returns>
 		public bool PrintNumber(string number)
 		{
+			// remove "NumPad" from converted string number if NumPad numbers are used
+			if (number.Contains("NumPad"))
+			{
+				number = number.Remove(0, 6);
+			}
+
 			// if result is in log, then clear log
 			if (this.ResultInLog)
 			{
