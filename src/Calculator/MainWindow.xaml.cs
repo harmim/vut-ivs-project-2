@@ -1,283 +1,361 @@
-﻿/**************************************************************
+/**************************************************************
  * Team:      Disassembler
- * 
- * Authors:   Vojtìch Hertl <xhertl04@stud.fit.vutbr.cz>
+ *
+ * Authors:   Vojtěch Hertl <xhertl04@stud.fit.vutbr.cz>
  *            Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
  *            Timotej Halás <xhalas10@stud.fit.vutbr.cz>
  *            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
  **************************************************************/
 
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Calculator
+namespace Disassembler.Calculator
 {
 	/// <summary>
-	///     Interaction logic for MainWindow.xaml
+	///     Interaction logic for MainWindow.xaml.
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private bool IsAnswer;
+		// TextLog properties
+		private const double TextLogScrollOffset = 15.0;
 
+		// math operations processor
+		private readonly MathProcessor mathProcessor;
+
+		// output result processor
+		private readonly OutputProcessor outputProcessor;
+
+		/// <summary>
+		///     MainWindow construct.
+		/// </summary>
 		public MainWindow()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
+			this.outputProcessor = new OutputProcessor(this.TextAns, this.TextLog);
+			this.mathProcessor = new MathProcessor(this.outputProcessor);
 		}
 
+		/// <summary>
+		///     Handle and process mouse wheel over TextLog element.
+		///     Allows horizontal scrolling.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">MouseWheelEventArgs.</param>
 		private void TextLog_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
 		{
-			var Scroll = TextLog.HorizontalOffset;
+			double scroll = this.TextLog.HorizontalOffset;
 			if (e.Delta > 0)
 			{
-				Scroll -= 15;
-				TextLog.ScrollToHorizontalOffset(Scroll);
+				scroll -= TextLogScrollOffset;
+				this.TextLog.ScrollToHorizontalOffset(scroll);
 			}
 			else
 			{
-				Scroll += 15;
-				TextLog.ScrollToHorizontalOffset(Scroll);
+				scroll += TextLogScrollOffset;
+				this.TextLog.ScrollToHorizontalOffset(scroll);
 			}
-			TextLog.UpdateLayout();
-			e.Handled = true;
+			this.TextLog.UpdateLayout();
 		}
 
+		/// <summary>
+		///     Handle and process about item click.
+		///     Open AboutWindow dialog.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void AboutItem_Click(object sender, RoutedEventArgs e)
 		{
-			var about = new AboutWindow();
+			AboutWindow about = new AboutWindow();
 			about.ShowDialog();
 		}
 
-		private void Button0_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle numeric button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void NumericButton_Click(object sender, RoutedEventArgs e)
 		{
-			PrintNumAns("0");
+			this.outputProcessor.PrintNumber(((Button) sender).Content.ToString());
 		}
 
-		private void Button1_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("1");
-		}
-
-		private void Button2_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("2");
-		}
-
-		private void Button3_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("3");
-		}
-
-		private void Button4_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("4");
-		}
-
-		private void Button5_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("5");
-		}
-
-		private void Button6_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("6");
-		}
-
-		private void Button7_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("7");
-		}
-
-		private void Button8_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("8");
-		}
-
-		private void Button9_Click(object sender, RoutedEventArgs e)
-		{
-			PrintNumAns("9");
-		}
-
+		/// <summary>
+		///     Handle Comma button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonComma_Click(object sender, RoutedEventArgs e)
 		{
-			PrintComma();
+			this.outputProcessor.PrintComma();
 		}
 
+		/// <summary>
+		///     Handle Ans button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonAns_Click(object sender, RoutedEventArgs e)
 		{
-			Enter();
+			this.mathProcessor.CalculateResult(this.GetNumericAns());
+			this.outputProcessor.ClearLog();
+			MathProcessor.ClearResult();
 		}
 
-		private void ButtonPlus_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle Sum botton click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonSum_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog("+");
+			this.mathProcessor.ProcessSum(this.GetNumericAns());
 		}
 
-		private void ButtonMinus_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle Sub button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonSub_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog("-");
+			this.mathProcessor.ProcessSub(this.GetNumericAns());
 		}
 
-		private void ButtonMul_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle Mult button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonMult_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog("×");
+			this.mathProcessor.ProcessMult(this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Handle Div button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonDiv_Click(object sender, RoutedEventArgs e)
 		{
-			PrintLog("÷");
+			this.mathProcessor.ProcessDiv(this.GetNumericAns());
 		}
 
-		private void ButtonBack_Click(object sender, RoutedEventArgs e)
-		{
-			Backspace();
-		}
-
-		private void ButtonCE_Click(object sender, RoutedEventArgs e)
-		{
-			TextAns.Text = "0";
-			IsAnswer = false;
-		}
-
-		private void ButtonC_Click(object sender, RoutedEventArgs e)
-		{
-			TextAns.Text = "0";
-			TextLog.Text = "";
-			IsAnswer = false;
-		}
-
-		private void ButtonInv_Click(object sender, RoutedEventArgs e)
-		{
-		}
-
+		/// <summary>
+		///     Handle Fact button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonFact_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.ProcessFact(this.GetNumericAns());
 		}
 
-		private void ButtonExp_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle Pow button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonPow_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.ProcessPow(this.GetNumericAns());
 		}
 
-		private void ButtonSqrt_Click(object sender, RoutedEventArgs e)
+		/// <summary>
+		///     Handle Root button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonRoot_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.ProcessRoot(this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Handle Log button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonLog_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.ProcessLog(this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Handle Inv button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonInv_Click(object sender, RoutedEventArgs e)
+		{
+			this.outputProcessor.InvertAns();
+		}
+
+		/// <summary>
+		///     Handle Back button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonBack_Click(object sender, RoutedEventArgs e)
+		{
+			this.outputProcessor.Backspace();
+		}
+
+		/// <summary>
+		///     Process CE button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
+		private void ButtonCE_Click(object sender, RoutedEventArgs e)
+		{
+			this.outputProcessor.ClearAns();
+		}
+
+		/// <summary>
+		///     Process C button click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonC_Click(object sender, RoutedEventArgs e)
+		{
+			this.outputProcessor.ClearAns();
+			this.outputProcessor.ClearLog();
+			MathProcessor.ClearResult();
+		}
+
+		/// <summary>
+		///     Handle MC button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonMC_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.ClearMemory(this.ButtonMC, this.ButtonMR);
 		}
 
+		/// <summary>
+		///     Handle MR button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonMR_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.PrintMemory();
 		}
 
+		/// <summary>
+		///     Handle MPlus button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonMPlus_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.SumMemory(this.ButtonMC, this.ButtonMR, this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Handle MMinus button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonMMinus_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.SubMemory(this.ButtonMC, this.ButtonMR, this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Handle MSet button click.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonMSet_Click(object sender, RoutedEventArgs e)
 		{
+			this.mathProcessor.SetMemory(this.ButtonMC, this.ButtonMR, this.GetNumericAns());
 		}
 
+		/// <summary>
+		///     Process pressed keys.
+		/// </summary>
+		/// <param name="sender">Sender object.</param>
+		/// <param name="e">KeyEventArgs.</param>
 		private void Window_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.NumPad0)
-				PrintNumAns("0");
-			if (e.Key == Key.NumPad1)
-				PrintNumAns("1");
-			if (e.Key == Key.NumPad2)
-				PrintNumAns("2");
-			if (e.Key == Key.NumPad3)
-				PrintNumAns("3");
-			if (e.Key == Key.NumPad4)
-				PrintNumAns("4");
-			if (e.Key == Key.NumPad5)
-				PrintNumAns("5");
-			if (e.Key == Key.NumPad6)
-				PrintNumAns("6");
-			if (e.Key == Key.NumPad7)
-				PrintNumAns("7");
-			if (e.Key == Key.NumPad8)
-				PrintNumAns("8");
-			if (e.Key == Key.NumPad9)
-				PrintNumAns("9");
-			if (e.Key == Key.Decimal)
-				PrintComma();
-			if (e.Key == Key.Add)
-				PrintLog("+");
-			if (e.Key == Key.Subtract)
-				PrintLog("-");
-			if (e.Key == Key.Multiply)
-				PrintLog("×");
-			if (e.Key == Key.Divide)
-				PrintLog("÷");
+			bool shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+
+			// print number
+			if (!shiftPressed && Utils.IsNumericKey(e.Key))
+			{
+				KeyConverter keyConverter = new KeyConverter();
+				this.outputProcessor.PrintNumber(keyConverter.ConvertToString(e.Key));
+			}
+
+			// print decimal separator (comma)
+			if (!shiftPressed && (e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod))
+			{
+				this.outputProcessor.PrintComma();
+			}
+
+			// calculate result
+			if (e.Key == Key.Enter || e.Key == Key.Return || !shiftPressed && e.Key == Key.OemPlus)
+			{
+				this.mathProcessor.CalculateResult(this.GetNumericAns());
+			}
+
+			// remove last number
 			if (e.Key == Key.Back)
-				Backspace();
-			if (e.Key == Key.Enter)
-				Enter();
-		}
-
-		private void PrintComma()
-		{
-			if (!TextAns.Text.Contains(",") && !IsAnswer)
-				TextAns.Text += ",";
-		}
-
-		private void PrintNumAns(string number)
-		{
-			if (TextAns.Text.Length < 16)
 			{
-				if (TextAns.Text == "0" || IsAnswer)
-					TextAns.Text = number;
-				else
-					TextAns.Text += number;
-				IsAnswer = false;
+				this.outputProcessor.Backspace();
+			}
+
+			// sum
+			if (e.Key == Key.Add || shiftPressed && e.Key == Key.OemPlus)
+			{
+				this.mathProcessor.ProcessSum(this.GetNumericAns());
+			}
+
+			// sub
+			if (e.Key == Key.Subtract || !shiftPressed && e.Key == Key.OemMinus)
+			{
+				this.mathProcessor.ProcessSub(this.GetNumericAns());
+			}
+
+			// mult
+			if (e.Key == Key.Multiply || shiftPressed && e.Key == Key.D8)
+			{
+				this.mathProcessor.ProcessMult(this.GetNumericAns());
+			}
+
+			// div
+			if (e.Key == Key.Divide || !shiftPressed && e.Key == Key.OemQuestion)
+			{
+				this.mathProcessor.ProcessDiv(this.GetNumericAns());
+			}
+
+			// fact
+			if (shiftPressed && e.Key == Key.D1)
+			{
+				this.mathProcessor.ProcessFact(this.GetNumericAns());
+			}
+
+			// pow
+			if (shiftPressed && e.Key == Key.D6)
+			{
+				this.mathProcessor.ProcessPow(this.GetNumericAns());
 			}
 		}
 
-		private void PrintLog(string operation)
+		/// <summary>
+		///     Get answer parsed double.
+		/// </summary>
+		/// <returns>Parsed answer to double.</returns>
+		private double GetNumericAns()
 		{
-			if (TextLog.Text.EndsWith(" ") && IsAnswer)
-			{
-				TextLog.Text = TextLog.Text.Remove(TextLog.Text.Length - 2);
-				TextLog.Text = TextLog.Text.Insert(TextLog.Text.Length, operation + " ");
-				PrintAns("ans");
-			}
-			if (!IsAnswer)
-			{
-				TextLog.Text += TextAns.Text + " " + operation + " ";
-				PrintAns("ans");
-			}
-			TextLog.CaretIndex = TextLog.Text.Length;
-			var rect = TextLog.GetRectFromCharacterIndex(TextLog.CaretIndex);
-			TextLog.ScrollToHorizontalOffset(rect.Right);
-		}
+			double ans;
+			double.TryParse(this.TextAns.Text, out ans);
 
-		private void PrintAns(string answer)
-		{
-			TextAns.Text = answer;
-			IsAnswer = true;
-		}
-
-		private void Backspace()
-		{
-			if (TextAns.Text.Length > 0 && !IsAnswer)
-				if (TextAns.Text.Length == 1)
-					TextAns.Text = "0";
-				else
-					TextAns.Text = TextAns.Text.Remove(TextAns.Text.Length - 1);
-		}
-
-		private void Enter()
-		{
-			TextLog.Text = "";
-			PrintAns("ans");
+			return ans;
 		}
 	}
 }
