@@ -7,6 +7,7 @@
  *            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
  **************************************************************/
 
+using Disassembler.Calculator.Math;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Disassembler.Tests
@@ -14,9 +15,17 @@ namespace Disassembler.Tests
 	[TestClass]
 	public class MathTests
 	{
-		[TestMethod]
-		public void TestMethod1()
+		private readonly IMath math;
+
+		public MathTests()
 		{
+			this.math = new Math();
+		}
+
+		[TestMethod]
+		public void Sub_Tests()
+		{
+			Assert.AreEqual(this.math.Sub(0, 0), 0);
 		}
 	}
 }
