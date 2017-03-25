@@ -1,6 +1,6 @@
-﻿/**************************************************************
+/**************************************************************
  * Team:      Disassembler
- * 
+ *
  * Authors:   Vojtěch Hertl <xhertl04@stud.fit.vutbr.cz>
  *            Dominik Harmim <xharmi00@stud.fit.vutbr.cz>
  *            Timotej Halás <xhalas10@stud.fit.vutbr.cz>
@@ -33,7 +33,7 @@ namespace Disassembler.Calculator.Math
 			throw new NotImplementedException();
 		}
 
-		public ulong Fact(ushort num)
+		public ulong Fact(double num)
 		{
 			throw new NotImplementedException();
 		}

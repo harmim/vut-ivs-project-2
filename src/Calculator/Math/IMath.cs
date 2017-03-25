@@ -51,7 +51,7 @@ namespace Disassembler.Calculator.Math
 		/// </summary>
 		/// <param name="num">Factoriated number.</param>
 		/// <returns>Factorial from the number.</returns>
-		ulong Fact(ushort num);
+		ulong Fact(double num);
 
 		/// <summary>
 		///     Exponentiation with general exponent.
