@@ -22,9 +22,9 @@ namespace Disassembler.Calculator
 	{
 		// TextAns TextBox properties
 		private const int TextAnsMaxLength = 20;
-		private const int TextAnsBasicFontLimit = 12;
-		private const double TextAnsBasicFontSize = 44.0;
-		private const double TextAnsValueOfFontSizeReduction = 5.6;
+		private const int TextAnsBasicFontLimit = 14;
+		private const double TextAnsBasicFontSize = 42.0;
+		private const double TextAnsValueOfFontSizeReduction = 2.5;
 
 		// culture
 		private const string Culture = "cs-CZ";
@@ -86,22 +86,6 @@ namespace Disassembler.Calculator
 				return false;
 			}
 
-			// basic font limit was reached -> reduce font size
-			if (this.textAns.Text.Length > TextAnsBasicFontLimit)
-			{
-				// remove non numeric chars
-				string textAnsText = Utils.RemoveSpaces(Utils.RemoveChars(this.textAns.Text, new[] {',', '-'}));
-				// reduce font size only once per two numbers
-				if (textAnsText.Length % 2 == 0)
-				{
-					this.textAns.FontSize -= TextAnsValueOfFontSizeReduction;
-				}
-			}
-			else
-			{
-				this.textAns.FontSize = TextAnsBasicFontSize;
-			}
-
 			if (this.textAns.Text == "0" || this.IsAnswer || this.IsMemoryOperator)
 			{
 				this.textAns.Text = number;
@@ -112,6 +96,7 @@ namespace Disassembler.Calculator
 			}
 
 			this.textAns.Text = this.FormatNumericValue(this.textAns.Text);
+			this.FixAnsFontSize();
 			this.IsAnswer = false;
 			this.IsMemoryOperator = false;
 
@@ -162,7 +147,7 @@ namespace Disassembler.Calculator
 		public void PrintAns(double answer)
 		{
 			this.textAns.Text = this.FormatNumericValue(answer);
-			this.textAns.FontSize = TextAnsBasicFontSize;
+			this.FixAnsFontSize();
 			if (!this.ResultInLog)
 			{
 				this.IsAnswer = true;
@@ -244,7 +229,6 @@ namespace Disassembler.Calculator
 				return;
 			}
 
-			bool containsComma = this.textAns.Text.Contains(",");
 			int removeLength = 1;
 			// if penultimate char is whitespace, then remove it too
 			if (string.IsNullOrWhiteSpace(this.textAns.Text.Substring(this.textAns.Text.Length - 2, 1)))
@@ -253,19 +237,8 @@ namespace Disassembler.Calculator
 			}
 			this.textAns.Text = this.textAns.Text.Remove(this.textAns.Text.Length - removeLength);
 
-			// basic font limit is reached -> increase font size
-			if (this.textAns.Text.Length > TextAnsBasicFontLimit && (!containsComma || this.textAns.Text.Contains(",")))
-			{
-				// remove non numeric chars
-				string textAnsText = Utils.RemoveSpaces(Utils.RemoveChars(this.textAns.Text, new[] {',', '-'}));
-				// increase font size only once per two numbers
-				if (textAnsText.Length % 2 == 0)
-				{
-					this.textAns.FontSize += TextAnsValueOfFontSizeReduction;
-				}
-			}
-
 			this.textAns.Text = this.FormatNumericValue(this.textAns.Text);
+			this.FixAnsFontSize();
 		}
 
 		/// <summary>
@@ -318,11 +291,28 @@ namespace Disassembler.Calculator
 			// remove non numeric chars except spaces
 			int formatedValueLenght = Utils.RemoveChars(formatedValue, new[] {',', '-'}).Length;
 
-			formatedValue = formatedValueLenght > TextAnsMaxLength
+			formatedValue = formatedValueLenght > TextAnsMaxLength || formatedValue.Contains("E")
 				? value.ToString("g2", cultureInfo)
 				: this.FormatNumericValue(formatedValue);
 
 			return formatedValue;
+		}
+
+		/// <summary>
+		///     Fix font size of ans text box.
+		/// </summary>
+		private void FixAnsFontSize()
+		{
+			// remove non numeric chars, expect spaces
+			string textAnsText = Utils.RemoveChars(this.textAns.Text, new[] { ',', '-' });
+			double size = TextAnsBasicFontSize;
+
+			if (textAnsText.Length > TextAnsBasicFontLimit)
+			{
+				size -= TextAnsValueOfFontSizeReduction * (textAnsText.Length - TextAnsBasicFontLimit) * ((100 - (textAnsText.Length - TextAnsBasicFontLimit) * 2) / 100.0);
+			}
+
+			this.textAns.FontSize = size;
 		}
 	}
 }
