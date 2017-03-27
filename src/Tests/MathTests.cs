@@ -155,8 +155,9 @@ namespace Disassembler.Tests
 		[TestMethod]
 		public void FactTest()
 		{
-			// argument out of ragne
-			const string argumentOutOfRangeExceptionMessage = "No exception was thrown after passed argument out of range.";
+			// argument out of range
+			const string argumentOutOfRangeExceptionMessage =
+				"No exception was thrown after passed argument out of range.";
 			try
 			{
 				this.math.Fact(-20);
@@ -187,6 +188,193 @@ namespace Disassembler.Tests
 			Assert.AreEqual(120, this.math.Fact(5));
 			Assert.AreEqual(1.307674368e12, this.math.Fact(15), Accuracy);
 			Assert.AreEqual(40320, this.math.Fact(8));
+		}
+
+		/// <summary>
+		///     Math.Pow test.
+		/// </summary>
+		[TestMethod]
+		public void PowTest()
+		{
+			// not a number result
+			const string notFiniteNumberExceptionMessage = "No exception was thrown when result was NaN or infinity.";
+			try
+			{
+				this.math.Pow(0, -1);
+				Assert.Fail(notFiniteNumberExceptionMessage);
+			}
+			catch (NotFiniteNumberException)
+			{
+			}
+			try
+			{
+				this.math.Pow(-1, 2.5);
+				Assert.Fail(notFiniteNumberExceptionMessage);
+			}
+			catch (NotFiniteNumberException)
+			{
+			}
+			try
+			{
+				this.math.Pow(-1.5, -2.5);
+				Assert.Fail(notFiniteNumberExceptionMessage);
+			}
+			catch (NotFiniteNumberException)
+			{
+			}
+
+			// are equal
+			Assert.AreEqual(1, this.math.Pow(69, 0));
+			Assert.AreEqual(0, this.math.Pow(0, 33));
+			Assert.AreEqual(-1, this.math.Pow(-1, 97));
+			Assert.AreEqual(1, this.math.Pow(-1, 98));
+			Assert.AreEqual(25, this.math.Pow(5, 2));
+			Assert.AreEqual(9, this.math.Pow(-3, 2));
+			Assert.AreEqual(-125, this.math.Pow(-5, 3));
+			Assert.AreEqual(0.125, this.math.Pow(2, -3));
+			Assert.AreEqual(1073741824, this.math.Pow(-2, 30));
+			Assert.AreEqual(2.35898248, this.math.Pow(-9000, -30), Accuracy);
+			Assert.AreEqual(124467.9702668, this.math.Pow(4.5, 7.8), Accuracy);
+			Assert.AreEqual(8.03419544, this.math.Pow(4.5, -7.8), Accuracy);
+			Assert.AreEqual(0.42584909, this.math.Pow(0.33, 0.77), Accuracy);
+			Assert.AreEqual(0.03225153, this.math.Pow(System.Math.PI, -3), Accuracy);
+
+			// are not equal
+			Assert.AreNotEqual(0, this.math.Pow(0, 8));
+			Assert.AreNotEqual(1, this.math.Pow(1.05, 8));
+			Assert.AreNotEqual(0.03224153, this.math.Pow(System.Math.PI, -3), Accuracy);
+		}
+
+		/// <summary>
+		///     Math.Root test.
+		/// </summary>
+		public void RootTest()
+		{
+			// argument out of range
+			const string argumentOutOfRangeExceptionMessage =
+				"No exception was thrown after an argument was of out of range.";
+			try
+			{
+				this.math.Root(-1, 2);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Root(-1.7, -15.7);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+
+			// not a number result
+			const string notFiniteNumberExceptionMessage = "No exception was thrown when result was NaN or infinity.";
+			try
+			{
+				this.math.Root(0, -1);
+				Assert.Fail(notFiniteNumberExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+
+			// are equal
+			Assert.AreEqual(1, this.math.Root(69, 0));
+			Assert.AreEqual(0, this.math.Root(0, 0.33));
+			Assert.AreEqual(2, this.math.Root(8, 3));
+			Assert.AreEqual(0.001953125, this.math.Root(8, -3), Accuracy);
+			Assert.AreEqual(1.765174167, this.math.Root(5.5, 3), Accuracy);
+			Assert.AreEqual(2.889430626, this.math.Root(55.78, 3.79), Accuracy);
+			Assert.AreEqual(0.346088945, this.math.Root(55.78, -3.79), Accuracy);
+			Assert.AreEqual(0.977899324, this.math.Root(0.064, 123), Accuracy);
+			Assert.AreEqual(1.35459068, this.math.Root(9000, 30), Accuracy);
+			Assert.AreEqual(0.73823038, this.math.Root(9000, -30), Accuracy);
+			Assert.AreEqual(8.53755712e-21, this.math.Root(0.5, 0.015), Accuracy);
+			Assert.AreEqual(0.68278406, this.math.Root(System.Math.PI, -3), Accuracy);
+
+			// are not equal
+			Assert.AreNotEqual(0, this.math.Root(0, 8));
+			Assert.AreNotEqual(1, this.math.Root(1.05, 0.125));
+			Assert.AreNotEqual(0.68277406, this.math.Root(System.Math.PI, -3), Accuracy);
+		}
+
+		/// <summary>
+		///     Math.Log test.
+		/// </summary>
+		public void LogTest()
+		{
+			// argument out of range
+			const string argumentOutOfRangeExceptionMessage =
+				"No exception was thrown after an argument was of out of range.";
+			try
+			{
+				this.math.Log(3, -1);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Log(-1, 3);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Log(0, 0.5);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Log(0, 1.5);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Log(5, 0);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+			try
+			{
+				this.math.Log(1, 8);
+				Assert.Fail(argumentOutOfRangeExceptionMessage);
+			}
+			catch (ArgumentOutOfRangeException)
+			{
+			}
+
+			// are equal
+			Assert.AreEqual(0, this.math.Log(0, 1)); //special occasion
+			Assert.AreEqual(0, this.math.Log(23.7, 1));
+			Assert.AreEqual(1, this.math.Log(10, 10));
+			Assert.AreEqual(1, this.math.Log(0.03, 0.03));
+			Assert.AreEqual(-2.2326607568, this.math.Log(0.5, 4.7), Accuracy);
+			Assert.AreEqual(1.7286851437, this.math.Log(2.9, 6.3), Accuracy);
+			Assert.AreEqual(-0.87154186672, this.math.Log(0.004, 123), Accuracy);
+			Assert.AreEqual(-1.1473918101, this.math.Log(123, 0.004), Accuracy);
+			Assert.AreEqual(1.2722897456, this.math.Log(123, 456), Accuracy);
+			Assert.AreEqual(0.89864715222, this.math.Log(0.004, 0.007), Accuracy);
+			Assert.AreEqual(0.99325177301, this.math.Log(System.Math.E, 2.7), Accuracy);
+
+			// are not equal
+			Assert.AreNotEqual(1, this.math.Log(3.5, 3.6));
+			Assert.AreNotEqual(0, this.math.Log(15, 1.01));
+			Assert.AreNotEqual(1, this.math.Root(System.Math.E, 2.7), Accuracy);
 		}
 	}
 }
