@@ -112,9 +112,9 @@ namespace Disassembler.Tests
 			Assert.AreEqual(1, this.math.Div(-5, -5));
 			Assert.AreEqual(-0.5, this.math.Div(42, -84), Accuracy);
 			Assert.AreEqual(-2, this.math.Div(-100000000, 50000000));
-			Assert.AreEqual(0.875, this.math.Div(7, 8));
+			Assert.AreEqual(0.875, this.math.Div(7, 8), Accuracy);
 			Assert.AreEqual(-0.5, this.math.Div(-128, 256), Accuracy);
-			Assert.AreEqual(2, this.math.Div(0.5, 0.25));
+			Assert.AreEqual(2, this.math.Div(0.5, 0.25), Accuracy);
 			Assert.AreEqual(0.9676971731, this.math.Div(31.312, 32.35723), Accuracy);
 			Assert.AreEqual(-1.047197551, this.math.Div(System.Math.PI, -3), Accuracy);
 
@@ -231,7 +231,7 @@ namespace Disassembler.Tests
 			Assert.AreEqual(25, this.math.Pow(5, 2));
 			Assert.AreEqual(9, this.math.Pow(-3, 2));
 			Assert.AreEqual(-125, this.math.Pow(-5, 3));
-			Assert.AreEqual(0.125, this.math.Pow(2, -3));
+			Assert.AreEqual(0.125, this.math.Pow(2, -3), Accuracy);
 			Assert.AreEqual(1073741824, this.math.Pow(-2, 30));
 			Assert.AreEqual(2.35898248, this.math.Pow(-9000, -30), Accuracy);
 			Assert.AreEqual(124467.9702668, this.math.Pow(4.5, 7.8), Accuracy);
@@ -241,7 +241,7 @@ namespace Disassembler.Tests
 
 			// are not equal
 			Assert.AreNotEqual(0, this.math.Pow(0, 8));
-			Assert.AreNotEqual(1, this.math.Pow(1.05, 8));
+			Assert.AreNotEqual(1, this.math.Pow(1.05, 8), Accuracy);
 			Assert.AreNotEqual(0.03224153, this.math.Pow(System.Math.PI, -3), Accuracy);
 		}
 
@@ -283,7 +283,7 @@ namespace Disassembler.Tests
 
 			// are equal
 			Assert.AreEqual(1, this.math.Root(69, 0));
-			Assert.AreEqual(0, this.math.Root(0, 0.33));
+			Assert.AreEqual(0, this.math.Root(0, 0.33), Accuracy);
 			Assert.AreEqual(2, this.math.Root(8, 3));
 			Assert.AreEqual(0.001953125, this.math.Root(8, -3), Accuracy);
 			Assert.AreEqual(1.765174167, this.math.Root(5.5, 3), Accuracy);
@@ -297,7 +297,7 @@ namespace Disassembler.Tests
 
 			// are not equal
 			Assert.AreNotEqual(0, this.math.Root(0, 8));
-			Assert.AreNotEqual(1, this.math.Root(1.05, 0.125));
+			Assert.AreNotEqual(1, this.math.Root(1.05, 0.125), Accuracy);
 			Assert.AreNotEqual(0.68277406, this.math.Root(System.Math.PI, -3), Accuracy);
 		}
 
@@ -360,9 +360,9 @@ namespace Disassembler.Tests
 
 			// are equal
 			Assert.AreEqual(0, this.math.Log(0, 1)); //special occasion
-			Assert.AreEqual(0, this.math.Log(23.7, 1));
+			Assert.AreEqual(0, this.math.Log(23.7, 1), Accuracy);
 			Assert.AreEqual(1, this.math.Log(10, 10));
-			Assert.AreEqual(1, this.math.Log(0.03, 0.03));
+			Assert.AreEqual(1, this.math.Log(0.03, 0.03), Accuracy);
 			Assert.AreEqual(-2.2326607568, this.math.Log(0.5, 4.7), Accuracy);
 			Assert.AreEqual(1.7286851437, this.math.Log(2.9, 6.3), Accuracy);
 			Assert.AreEqual(-0.87154186672, this.math.Log(0.004, 123), Accuracy);
@@ -372,8 +372,8 @@ namespace Disassembler.Tests
 			Assert.AreEqual(0.99325177301, this.math.Log(System.Math.E, 2.7), Accuracy);
 
 			// are not equal
-			Assert.AreNotEqual(1, this.math.Log(3.5, 3.6));
-			Assert.AreNotEqual(0, this.math.Log(15, 1.01));
+			Assert.AreNotEqual(1, this.math.Log(3.5, 3.6), Accuracy);
+			Assert.AreNotEqual(0, this.math.Log(15, 1.01), Accuracy);
 			Assert.AreNotEqual(1, this.math.Root(System.Math.E, 2.7), Accuracy);
 		}
 	}
