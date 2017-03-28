@@ -40,17 +40,38 @@ namespace Disassembler.Calculator.Math
 
 		public double Pow(double basis, double exponent)
 		{
-			throw new NotImplementedException();
+			double result = System.Math.Pow(basis, exponent);
+
+			if (double.IsInfinity(result) || double.IsNaN(result))
+			{
+				throw new NotFiniteNumberException();
+			}
+
+			return result;
 		}
 
 		public double Root(double radicand, double degree)
 		{
-			throw new NotImplementedException();
+		    if (degree == 0.0)
+		    {
+		        throw new DivideByZeroException();
+		    }
+
+			double result = this.Pow(radicand, 1.0 / degree);
+
+		    return result;
 		}
 
 		public double Log(double basis, double antilogarithm)
 		{
-			throw new NotImplementedException();
+			double result = System.Math.Log(antilogarithm, basis);
+
+			if (double.IsInfinity(result) || double.IsNaN(result))
+			{
+				throw new NotFiniteNumberException();
+			}
+
+			return result;
 		}
 	}
 }
