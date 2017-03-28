@@ -226,6 +226,8 @@ namespace Disassembler.Tests
 			// are equal
 			Assert.AreEqual(1, this.math.Pow(69, 0));
 			Assert.AreEqual(0, this.math.Pow(0, 33));
+			Assert.AreEqual(1, this.math.Pow(1, 42));
+			Assert.AreEqual(1, this.math.Pow(1, -232.23), Accuracy);
 			Assert.AreEqual(-1, this.math.Pow(-1, 97));
 			Assert.AreEqual(1, this.math.Pow(-1, 98));
 			Assert.AreEqual(25, this.math.Pow(5, 2));
@@ -233,14 +235,14 @@ namespace Disassembler.Tests
 			Assert.AreEqual(-125, this.math.Pow(-5, 3));
 			Assert.AreEqual(0.125, this.math.Pow(2, -3), Accuracy);
 			Assert.AreEqual(1073741824, this.math.Pow(-2, 30));
-			Assert.AreEqual(2.35898248, this.math.Pow(-9000, -30), Accuracy);
+			Assert.AreEqual(2.35898248e-119, this.math.Pow(-9000, -30), Accuracy);
 			Assert.AreEqual(124467.9702668, this.math.Pow(4.5, 7.8), Accuracy);
-			Assert.AreEqual(8.03419544, this.math.Pow(4.5, -7.8), Accuracy);
+			Assert.AreEqual(8.03419544e-6, this.math.Pow(4.5, -7.8), Accuracy);
 			Assert.AreEqual(0.42584909, this.math.Pow(0.33, 0.77), Accuracy);
 			Assert.AreEqual(0.03225153, this.math.Pow(System.Math.PI, -3), Accuracy);
 
 			// are not equal
-			Assert.AreNotEqual(0, this.math.Pow(0, 8));
+			Assert.AreNotEqual(1, this.math.Pow(0, 8));
 			Assert.AreNotEqual(1, this.math.Pow(1.05, 8), Accuracy);
 			Assert.AreNotEqual(0.03224153, this.math.Pow(System.Math.PI, -3), Accuracy);
 		}
@@ -248,44 +250,59 @@ namespace Disassembler.Tests
 		/// <summary>
 		///     Math.Root test.
 		/// </summary>
+		[TestMethod]
 		public void RootTest()
 		{
-			// argument out of range
-			const string argumentOutOfRangeExceptionMessage =
-				"No exception was thrown after an argument was of out of range.";
+			// not a number result
+			const string notFiniteNumberExceptionMessage = "No exception was thrown when result was NaN or infinity.";
 			try
 			{
 				this.math.Root(-1, 2);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Root(-1.7, -15.7);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
-
-			// not a number result
-			const string notFiniteNumberExceptionMessage = "No exception was thrown when result was NaN or infinity.";
 			try
 			{
 				this.math.Root(0, -1);
 				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
+			{
+			}
+
+			// divide by zero
+			const string divedeByZeroNoExceptionMessage = "No exception was thrown after dividing by zero.";
+			try
+			{
+				this.math.Root(69, 0);
+				Assert.Fail(divedeByZeroNoExceptionMessage);
+			}
+			catch (DivideByZeroException)
+			{
+			}
+			try
+			{
+				this.math.Root(32.3112, 0);
+				Assert.Fail(divedeByZeroNoExceptionMessage);
+			}
+			catch (DivideByZeroException)
 			{
 			}
 
 			// are equal
-			Assert.AreEqual(1, this.math.Root(69, 0));
 			Assert.AreEqual(0, this.math.Root(0, 0.33), Accuracy);
 			Assert.AreEqual(2, this.math.Root(8, 3));
-			Assert.AreEqual(0.001953125, this.math.Root(8, -3), Accuracy);
+			Assert.AreEqual(0.5, this.math.Root(8, -3), Accuracy);
 			Assert.AreEqual(1.765174167, this.math.Root(5.5, 3), Accuracy);
 			Assert.AreEqual(2.889430626, this.math.Root(55.78, 3.79), Accuracy);
 			Assert.AreEqual(0.346088945, this.math.Root(55.78, -3.79), Accuracy);
@@ -296,7 +313,7 @@ namespace Disassembler.Tests
 			Assert.AreEqual(0.68278406, this.math.Root(System.Math.PI, -3), Accuracy);
 
 			// are not equal
-			Assert.AreNotEqual(0, this.math.Root(0, 8));
+			Assert.AreNotEqual(1, this.math.Root(0, 8));
 			Assert.AreNotEqual(1, this.math.Root(1.05, 0.125), Accuracy);
 			Assert.AreNotEqual(0.68277406, this.math.Root(System.Math.PI, -3), Accuracy);
 		}
@@ -304,57 +321,58 @@ namespace Disassembler.Tests
 		/// <summary>
 		///     Math.Log test.
 		/// </summary>
+		[TestMethod]
 		public void LogTest()
 		{
 			// argument out of range
-			const string argumentOutOfRangeExceptionMessage =
-				"No exception was thrown after an argument was of out of range.";
+			const string notFiniteNumberExceptionMessage =
+				"No exception was thrown when result was NaN or infinity.";
 			try
 			{
 				this.math.Log(3, -1);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Log(-1, 3);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Log(0, 0.5);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Log(0, 1.5);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Log(5, 0);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 			try
 			{
 				this.math.Log(1, 8);
-				Assert.Fail(argumentOutOfRangeExceptionMessage);
+				Assert.Fail(notFiniteNumberExceptionMessage);
 			}
-			catch (ArgumentOutOfRangeException)
+			catch (NotFiniteNumberException)
 			{
 			}
 
@@ -362,6 +380,7 @@ namespace Disassembler.Tests
 			Assert.AreEqual(0, this.math.Log(0, 1)); //special occasion
 			Assert.AreEqual(0, this.math.Log(23.7, 1), Accuracy);
 			Assert.AreEqual(1, this.math.Log(10, 10));
+			Assert.AreEqual(6, this.math.Log(2, 64));
 			Assert.AreEqual(1, this.math.Log(0.03, 0.03), Accuracy);
 			Assert.AreEqual(-2.2326607568, this.math.Log(0.5, 4.7), Accuracy);
 			Assert.AreEqual(1.7286851437, this.math.Log(2.9, 6.3), Accuracy);
@@ -374,7 +393,7 @@ namespace Disassembler.Tests
 			// are not equal
 			Assert.AreNotEqual(1, this.math.Log(3.5, 3.6), Accuracy);
 			Assert.AreNotEqual(0, this.math.Log(15, 1.01), Accuracy);
-			Assert.AreNotEqual(1, this.math.Root(System.Math.E, 2.7), Accuracy);
+			Assert.AreNotEqual(1, this.math.Log(System.Math.E, 2.7), Accuracy);
 		}
 	}
 }
