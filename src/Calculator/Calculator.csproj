@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MathProcessor.cs" />
+    <Compile Include="Math\Math.cs" />
     <Compile Include="OutputProcessor.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="AboutWindow.xaml">
