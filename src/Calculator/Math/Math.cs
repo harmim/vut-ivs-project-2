@@ -15,69 +15,30 @@ namespace Disassembler.Calculator.Math
 	{
 		public double Sum(double num1, double num2)
 		{
-            double result = 0;
-            result = num1 + num2;
-			return result;
+			return num1 + num2;
 		}
 
 		public double Sub(double minuend, double subtrahend)
 		{
-            double result = 0;
-            result = minuend - subtrahend;
-            return result;
-			throw new NotImplementedException();
+			return minuend - subtrahend;
 		}
 
 		public double Div(double divident, double divisor)
 		{
-            double result = 0;
-            if ( divisor == 0)
-            {
-                throw new DivideByZeroException();
-            } 
-            else
-            {
-                result = divident / divisor;
-            }
-            return result;
-			
+			if (divisor == 0.0)
+			{
+				throw new DivideByZeroException();
+			}
+
+			return divident / divisor;
 		}
 
 		public double Mult(double num1, double num2)
 		{
-            double result = 0;
-            result = num1 * num2;
-            return result;
+			return num1 * num2;
 		}
 
-        public double Fact(double num)
-        {
-            double result = num;
-
-            if (num <0 )
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            else if (num == 0)
-            {
-                result = 1;
-            }
-            else if ((num > 0) && (num % 1 == 0))
-            {
-                
-                for (int i = 1; i < num; i++)
-                {
-                    result = result * (num - i);
-                }
-            }
-            
-
-            
-            return result;
-        } 
-
-        public double Pow(double basis, double exponent)
+		public double Pow(double basis, double exponent)
 		{
 			double result = System.Math.Pow(basis, exponent);
 
@@ -91,14 +52,14 @@ namespace Disassembler.Calculator.Math
 
 		public double Root(double radicand, double degree)
 		{
-		    if (degree == 0.0)
-		    {
-		        throw new DivideByZeroException();
-		    }
+			if (degree == 0.0)
+			{
+				throw new DivideByZeroException();
+			}
 
 			double result = this.Pow(radicand, 1.0 / degree);
 
-		    return result;
+			return result;
 		}
 
 		public double Log(double basis, double antilogarithm)
@@ -108,6 +69,29 @@ namespace Disassembler.Calculator.Math
 			if (double.IsInfinity(result) || double.IsNaN(result))
 			{
 				throw new NotFiniteNumberException();
+			}
+
+			return result;
+		}
+
+		public ulong Fact(double num)
+		{
+		    if (num < 0.0 || num % 1 != 0.0)
+		    {
+				throw new ArgumentOutOfRangeException();
+			}
+
+			ulong result = (ulong) num;
+		    ulong numLong = result;
+
+			if (numLong == 0)
+			{
+				return 1;
+			}
+
+		    for (ulong i = 1; i < numLong; i++)
+		    {
+				result = result * (numLong - i);
 			}
 
 			return result;
