@@ -15,27 +15,27 @@ namespace Disassembler.Calculator.Math
 	{
 		public double Sum(double num1, double num2)
 		{
-			throw new NotImplementedException();
+			return num1 + num2;
 		}
 
 		public double Sub(double minuend, double subtrahend)
 		{
-			throw new NotImplementedException();
+			return minuend - subtrahend;
 		}
 
 		public double Div(double divident, double divisor)
 		{
-			throw new NotImplementedException();
+			if (divisor == 0.0)
+			{
+				throw new DivideByZeroException();
+			}
+
+			return divident / divisor;
 		}
 
 		public double Mult(double num1, double num2)
 		{
-			throw new NotImplementedException();
-		}
-
-		public ulong Fact(double num)
-		{
-			throw new NotImplementedException();
+			return num1 * num2;
 		}
 
 		public double Pow(double basis, double exponent)
@@ -52,14 +52,14 @@ namespace Disassembler.Calculator.Math
 
 		public double Root(double radicand, double degree)
 		{
-		    if (degree == 0.0)
-		    {
-		        throw new DivideByZeroException();
-		    }
+			if (degree == 0.0)
+			{
+				throw new DivideByZeroException();
+			}
 
 			double result = this.Pow(radicand, 1.0 / degree);
 
-		    return result;
+			return result;
 		}
 
 		public double Log(double basis, double antilogarithm)
@@ -69,6 +69,29 @@ namespace Disassembler.Calculator.Math
 			if (double.IsInfinity(result) || double.IsNaN(result))
 			{
 				throw new NotFiniteNumberException();
+			}
+
+			return result;
+		}
+
+		public ulong Fact(double num)
+		{
+		    if (num < 0.0 || num % 1 != 0.0)
+		    {
+				throw new ArgumentOutOfRangeException();
+			}
+
+			ulong result = (ulong) num;
+		    ulong numLong = result;
+
+			if (numLong == 0)
+			{
+				return 1;
+			}
+
+		    for (ulong i = 1; i < numLong; i++)
+		    {
+				result = result * (numLong - i);
 			}
 
 			return result;

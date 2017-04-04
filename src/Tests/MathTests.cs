@@ -184,10 +184,10 @@ namespace Disassembler.Tests
 			}
 
 			// are equal
-			Assert.AreEqual(1, this.math.Fact(0));
-			Assert.AreEqual(120, this.math.Fact(5));
-			Assert.AreEqual(1.307674368e12, this.math.Fact(15), Accuracy);
-			Assert.AreEqual(40320, this.math.Fact(8));
+			Assert.AreEqual((ulong) 1, this.math.Fact(0));
+			Assert.AreEqual((ulong) 120, this.math.Fact(5));
+			Assert.AreEqual((ulong) 1.307674368e12, this.math.Fact(15), Accuracy);
+			Assert.AreEqual((ulong) 40320, this.math.Fact(8));
 		}
 
 		/// <summary>
