@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Math = Disassembler.Calculator.Math.Math;
 
 namespace Disassembler
 {
@@ -70,8 +71,21 @@ namespace Disassembler
 		/// <returns>Standard deviation of given numbers.</returns>
 		private static double CalculateStandardDeviation(List<double> numbers)
 		{
-			// TODO
-			return 0.0;
+			Math math = new Math();
+			double n = 0.0;
+			double arithmAvg = 0.0;
+			double deviation = 0.0;
+			//Arithmetical mean & Deviation summary
+			foreach (double num in numbers)
+			{
+				arithmAvg = math.Sum(arithmAvg, num);
+				deviation = math.Sum(deviation, math.Pow(num, 2.0));
+				n++;
+			}
+			//Average
+			arithmAvg = math.Div(arithmAvg, n);\
+			//Deviation
+			return math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1));
 		}
 	}
 }
