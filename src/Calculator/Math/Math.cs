@@ -76,21 +76,21 @@ namespace Disassembler.Calculator.Math
 
 		public ulong Fact(double num)
 		{
-		    if (num < 0.0 || num % 1 != 0.0)
-		    {
+			if (num < 0.0 || num % 1 != 0.0)
+			{
 				throw new ArgumentOutOfRangeException();
 			}
 
 			ulong result = (ulong) num;
-		    ulong numLong = result;
+			ulong numLong = result;
 
 			if (numLong == 0)
 			{
 				return 1;
 			}
 
-		    for (ulong i = 1; i < numLong; i++)
-		    {
+			for (ulong i = 1; i < numLong; i++)
+			{
 				result = result * (numLong - i);
 			}
 
