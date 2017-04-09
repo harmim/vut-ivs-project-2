@@ -71,6 +71,12 @@ namespace Disassembler
 		/// <returns>Standard deviation of given numbers.</returns>
 		private static double CalculateStandardDeviation(List<double> numbers)
 		{
+			//If list is empty, throw an exception
+			if (numbers.Count == 0)
+			{
+				throw new ArgumentNullException();
+			}
+			//Do the math
 			Math math = new Math();
 			double n = 0.0;
 			double arithmAvg = 0.0;
@@ -85,7 +91,7 @@ namespace Disassembler
 			//Average
 			arithmAvg = math.Div(arithmAvg, n);
 			//Deviation
-			return math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1));
+			return math.Root(math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1)),2);
 		}
 	}
 }
