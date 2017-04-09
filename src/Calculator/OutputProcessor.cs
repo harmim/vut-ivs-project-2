@@ -186,6 +186,13 @@ namespace Disassembler.Calculator
 			this.ResultInLog = false;
 		}
 
+		public void PrintError()
+		{
+			this.textAns.Text = "Error";
+			this.FixAnsFontSize();
+			this.IsAnswer = true;
+		}
+
 		/// <summary>
 		///     Clear log.
 		/// </summary>

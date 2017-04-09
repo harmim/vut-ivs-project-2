@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -19,6 +20,8 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public partial class AboutWindow : Window
 	{
+		private const string DocPath = "\\doc\\doc.pdf";
+
 		/// <summary>
 		///     AboutWindow construct.
 		/// </summary>
@@ -47,8 +50,11 @@ namespace Disassembler.Calculator
 		/// <param name="e">RoutedEventArgs.</param>
 		private void DocumentationHyperlink_Click(object sender, RoutedEventArgs e)
 		{
-			string appPath = AppDomain.CurrentDomain.BaseDirectory;
-			Process.Start(appPath + "\\doc\\doc.pdf");
+			string path = AppDomain.CurrentDomain.BaseDirectory + DocPath;
+			if (File.Exists(path))
+			{
+				Process.Start(path);
+			}
 		}
 	}
 }
