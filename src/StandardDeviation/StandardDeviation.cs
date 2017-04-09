@@ -83,7 +83,7 @@ namespace Disassembler
 				n++;
 			}
 			//Average
-			arithmAvg = math.Div(arithmAvg, n);\
+			arithmAvg = math.Div(arithmAvg, n);
 			//Deviation
 			return math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1));
 		}
