@@ -1,0 +1,6 @@
+In file output.pdf is seen output of profiling function that calculating standard deviation with
+10, 100 and 1000 input values.
+
+Program takes the most time invoking functions Pow and Sum. Function Pow is invoked as many times
+as input values count + 1. Function Sum is invoked as many times as input values count * 2.
+When optimizing code, we should focus just on function Pow and Sum.
