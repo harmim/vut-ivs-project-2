@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using Math = Disassembler.Calculator.Math.Math;
 
@@ -36,10 +37,19 @@ namespace Disassembler
 				return;
 			}
 
+			try
+			{
+				double result = CalculateStandardDeviation(numbers);
+			}
+			catch (ArgumentException e)
+			{
+				Console.WriteLine(e.Message);
+				return;
+			}
 			Console.WriteLine("Result: {0}", CalculateStandardDeviation(numbers));
 
 			// for debugging
-			//Console.ReadLine();
+			Console.ReadLine();
 		}
 
 		/// <summary>
@@ -74,7 +84,7 @@ namespace Disassembler
 			//If list is empty, throw an exception
 			if (numbers.Count == 0)
 			{
-				throw new ArgumentNullException();
+				throw new ArgumentException();
 			}
 			//Do the math
 			Math math = new Math();
@@ -91,7 +101,7 @@ namespace Disassembler
 			//Average
 			arithmAvg = math.Div(arithmAvg, n);
 			//Deviation
-			return math.Root(math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1)),2);
+			return math.Root(math.Div(math.Sub(deviation, math.Mult(n, math.Pow(arithmAvg, 2))), math.Sub(n, 1)), 2);
 		}
 	}
 }
