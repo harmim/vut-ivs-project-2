@@ -7,10 +7,10 @@
 # *            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
 # **************************************************************/
 
-doc_path = ../doc
+doc_path = ..\doc
 
 doc:
 	doxygen
-	make -C $(doc_path)
-	mv $(doc_path)/refman.pdf $(doc_path)/documentation.pdf
-	find ../doc ! -name 'documentation.pdf' -type f -exec rm -f {} +
+	"$(doc_path)\make.bat"
+	rename "..\doc\refman.pdf" "documentation.pdf"
+	for %%i in ($(doc_path)\*) do if not "%%i" == "$(doc_path)\documentation.pdf" del "%%i"
