@@ -12,21 +12,21 @@
 # GNU zip for Windows http://gnuwin32.sourceforge.net/packages/zip.htm
 # Doxygen for Windows http://www.stack.nl/~dimitri/doxygen/download.html
 
-ROOT_DIR=$(shell cd)\..
+ROOT_DIR:=$(shell cd)\..
 VISUAL_STUIDO_PATH=C:\Programs\Microsoft Visual Studio\2017\Enterprise
+MSBUILD=MSBuild\15.0\Bin\MSBuild.exe
+MSTEST=Common7\IDE\MSTEST.exe
 NUGET=MSBuild\ReadyRoll\OctoPack\tools\NuGet.exe
 PACKAGES_FILE=packages.config
 PACKAGES_DIR=$(ROOT_DIR)\packages
 
 PROJ_NAME=Calculator
-PROJ_DIR=$(ROOT_DIR)\src\Calculator
+PROJ_DIR=$(ROOT_DIR)\src\$(PROJ_NAME)
 PROJ=$(PROJ_DIR)\bin\Release\$(PROJ_NAME).exe
-MSBUILD=MSBuild\15.0\Bin\MSBuild.exe
 PROJ_FILE=$(PROJ_DIR)\$(PROJ_NAME).csproj
 
-MSTEST=Common7\IDE\MSTEST.exe
 TESTS_NAME=Tests
-TESTS_DIR=$(ROOT_DIR)\src\Tests
+TESTS_DIR=$(ROOT_DIR)\src\$(TESTS_NAME)
 TESTS_CONTAINER=$(ROOT_DIR)\src\$(TESTS_NAME)\bin\Debug\$(TESTS_NAME).dll
 TEST_RESULT_DIR=$(ROOT_DIR)\TestResults
 TESTS_RESULT_FILE=$(TEST_RESULT_DIR)\Result_file
@@ -34,26 +34,28 @@ TESTS_FILE=$(TESTS_DIR)\$(TESTS_NAME).csproj
 
 PACK_NAME=xharmi00_xhalas10_xhavla06_xhertl04
 PACK_ARCHIVE=$(ROOT_DIR)\$(PACK_NAME).zip
-PACK_DIR=$(ROOT_DIR)\..\$(PACK_NAME)
+PACK_DIR:=$(ROOT_DIR)\..\$(PACK_NAME)
 PACK_DOC_DIR=$(PACK_DIR)\doc
 PACK_INSTALL_DIR=$(PACK_DIR)\install
 PACK_REPO_DIR=$(PACK_DIR)\repo
 
 DOC_OUTPUT_DIR=$(ROOT_DIR)\src\doxygen_output
 
-STANDARD_DEVIATION_DIR=StandardDeviation
+STANDARD_DEVIATION_NAME=StandardDeviation
+STANDARD_DEVIATION_DIR=$(ROOT_DIR)\src\$(STANDARD_DEVIATION_NAME)
 
 .PHONY: all build pack clean test build_test nuget_test doc run
 
-# build Release project
+# default target => build project
 all: build
 
+# build Release project
 build:
 	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(PROJ_FILE)" /t:Rebuild /p:Configuration=Release
 
 # pack project
 pack: doc
-	rmdir "$(PACK_DIR)" /s /q 2>nul
+	if exist "$(PACK_DIR)" del "$(PACK_DIR)" /f /s /q 1>nul & rmdir "$(PACK_DIR)" /s /q
 	mkdir "$(PACK_DIR)"
 
 	mkdir "$(PACK_DOC_DIR)"
@@ -69,36 +71,28 @@ pack: doc
 	xcopy /s "$(ROOT_DIR)\.git\*" "$(PACK_REPO_DIR)\.git"
 
 	cd "$(PACK_DIR)\.." & zip -r "$(PACK_ARCHIVE)" $(PACK_NAME)
+	del "$(PACK_DIR)" /f /s /q 1>nul
 	rmdir "$(PACK_DIR)" /s /q
 
 # clean all temp files
+FILES_TO_REMOVE="$(ROOT_DIR)\Calculator.sln.DotSettings.user" "$(PROJ_DIR)\$(PROJ_NAME).csproj.user" "$(TESTS_DIR)\$(TESTS_NAME).csproj.user" "$(STANDARD_DEVIATION_DIR)\$(STANDARD_DEVIATION_NAME).csproj.user"
+DIRS_TO_REMOVE="$(ROOT_DIR)\.vs" "$(PACKAGES_DIR)" "$(TEST_RESULT_DIR)" "$(DOC_OUTPUT_DIR)" "$(PROJ_DIR)\bin" "$(PROJ_DIR)\obj" "$(TESTS_DIR)\bin" "$(TESTS_DIR)\obj" "$(STANDARD_DEVIATION_DIR)\bin" "$(STANDARD_DEVIATION_DIR)\obj"
 clean:
-	del "$(ROOT_DIR)\Calculator.sln.DotSettings.user"\
-	"$(PROJ_DIR)\Calculator.csproj.user"\
-	"$(TESTS_DIR)\Tests.csproj.user"\
-	"$(TESTS_DIR)\StandardDeviation.csproj.user"\
-	2>nul
-
-	rmdir "$(ROOT_DIR)\.vs"\
-	"$(ROOT_DIR)\packages"\
-	"$(TEST_RESULT_DIR)"\
-	"$(DOC_OUTPUT_DIR)"\
-	"$(PROJ_DIR)\bin"\
-	"$(PROJ_DIR)\obj"\
-	"$(TESTS_DIR)\bin"\
-	"$(TESTS_DIR)\obj"\
-	"$(STANDARD_DEVIATION_DIR)\bin"\
-	"$(STANDARD_DEVIATION_DIR)\obj"
-	/s /q 2>nul
+	for %%f in ($(FILES_TO_REMOVE)) do ( if exist %%f del %%f )
+	for %%d in ($(DIRS_TO_REMOVE)) do ( if exist %%d del %%d /f /s /q 1>nul & rmdir %%d /s /q )
+	if exist "$(PACK_ARCHIVE)" del "$(PACK_ARCHIVE)"
 
 # run tests of math library
 test: build_test
-	del "$(TESTS_RESULT_FILE)" 2>nul
+	if exist "$(TESTS_RESULT_FILE)" del "$(TESTS_RESULT_FILE)"
+	if not exist "$(TEST_RESULT_DIR)" mkdir "$(TEST_RESULT_DIR)"
 	cd "$(VISUAL_STUIDO_PATH)" & $(MSTEST) /testcontainer:"$(TESTS_CONTAINER)" /resultsfile:"$(TESTS_RESULT_FILE)"
 
+# build test
 build_test: nuget_test
 	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(TESTS_FILE)" /t:Rebuild /p:Configuration=Debug
 
+# download nuget packages for test
 nuget_test:
 	cd "$(VISUAL_STUIDO_PATH)" & $(NUGET) restore -OutputDirectory "$(PACKAGES_DIR)" "$(TESTS_DIR)\$(PACKAGES_FILE)"
 
@@ -107,5 +101,6 @@ doc: Doxyfile
 	doxygen $<
 
 # run program
-run: build
+run:
+	if not exist "$(PROJ)" make build
 	$(PROJ)
