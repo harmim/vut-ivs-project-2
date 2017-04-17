@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "src\Tests\Tests.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandardDeviation", "src\StandardDeviation\StandardDeviation.csproj", "{482BCCD5-B8E6-4C47-AAB7-7CEAB87CC121}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "src\Setup\Setup.vdproj", "{B729B3DA-C267-4536-8E25-7DC3C569FFD9}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "setup", "src\Setup\Setup.vdproj", "{B729B3DA-C267-4536-8E25-7DC3C569FFD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,7 +29,9 @@ Global
 		{482BCCD5-B8E6-4C47-AAB7-7CEAB87CC121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{482BCCD5-B8E6-4C47-AAB7-7CEAB87CC121}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B729B3DA-C267-4536-8E25-7DC3C569FFD9}.Debug|Any CPU.ActiveCfg = Debug
+		{B729B3DA-C267-4536-8E25-7DC3C569FFD9}.Debug|Any CPU.Build.0 = Debug
 		{B729B3DA-C267-4536-8E25-7DC3C569FFD9}.Release|Any CPU.ActiveCfg = Release
+		{B729B3DA-C267-4536-8E25-7DC3C569FFD9}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

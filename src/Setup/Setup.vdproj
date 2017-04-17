@@ -33,13 +33,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A0F6CD9BAE57421483D2CC93DC53CABC"
+        "MsmKey" = "8:_90AB05C9A63946219EE96A994029F88F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D15E1672E90A44DC952A2E2050CE67AD"
+        "MsmKey" = "8:_A0F6CD9BAE57421483D2CC93DC53CABC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -86,6 +86,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -150,7 +158,7 @@
         {
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48EB2BFF792B4802A35CEB740984250F"
             {
-            "SourcePath" = "8:..\\..\\src\\Calculator\\Assets\\Icon.ico"
+            "SourcePath" = "8:..\\Calculator\\Assets\\Icon.ico"
             "TargetName" = "8:Icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_48B905C1AEC94BDC9D7A9721E6991AF6"
@@ -188,12 +196,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0F6CD9BAE57421483D2CC93DC53CABC"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_90AB05C9A63946219EE96A994029F88F"
             {
-            "SourcePath" = "8:..\\..\\README.md"
-            "TargetName" = "8:README.md"
+            "SourcePath" = "8:..\\..\\documentation.pdf"
+            "TargetName" = "8:documentation.pdf"
             "Tag" = "8:"
-            "Folder" = "8:_9FFD3FCF9AEE4D2DB5A730C231E72707"
+            "Folder" = "8:_51D16E58FD7B4E5DB29CC3ADFA9C8C0D"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -208,12 +216,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D15E1672E90A44DC952A2E2050CE67AD"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0F6CD9BAE57421483D2CC93DC53CABC"
             {
-            "SourcePath" = "8:..\\..\\doc\\Documentation_empty.txt"
-            "TargetName" = "8:Documentation_empty.txt"
+            "SourcePath" = "8:..\\..\\README.md"
+            "TargetName" = "8:README.md"
             "Tag" = "8:"
-            "Folder" = "8:_51D16E58FD7B4E5DB29CC3ADFA9C8C0D"
+            "Folder" = "8:_9FFD3FCF9AEE4D2DB5A730C231E72707"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -347,9 +355,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:setup"
+        "ProductName" = "8:Calculator"
         "ProductCode" = "8:{E5CCB771-D1E0-4FE1-8CB5-E8FAC8BA7C15}"
-        "PackageCode" = "8:{5863983C-9859-45BE-A537-4F2F85C05440}"
+        "PackageCode" = "8:{33883EC5-EC13-4D15-A60E-A4B8A6268309}"
         "UpgradeCode" = "8:{6C199240-3D5E-4A5B-A0D2-4F3F0491EC14}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -359,13 +367,13 @@
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Disassembler"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:"
-        "Title" = "8:setup"
+        "ARPHELPLINK" = "8:https://github.com/harmim/vut-ivs-project-2"
+        "Title" = "8:Calculator"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Disassembler"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:https://github.com/harmim/vut-ivs-project-2"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -978,7 +986,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8CBED720C4C94270A08D88956409C432"
             {
-            "SourcePath" = "8:..\\..\\src\\Calculator\\obj\\Release\\Calculator.exe"
+            "SourcePath" = "8:..\\Calculator\\obj\\Release\\Calculator.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_9FFD3FCF9AEE4D2DB5A730C231E72707"

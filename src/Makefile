@@ -17,6 +17,7 @@ VISUAL_STUIDO_PATH=C:\Programs\Microsoft Visual Studio\2017\Enterprise
 MSBUILD=MSBuild\15.0\Bin\MSBuild.exe
 MSTEST=Common7\IDE\MSTEST.exe
 NUGET=MSBuild\ReadyRoll\OctoPack\tools\NuGet.exe
+DEVENV=Common7\IDE\devenv.com
 PACKAGES_FILE=packages.config
 PACKAGES_DIR=$(ROOT_DIR)\packages
 
@@ -44,17 +45,21 @@ DOC_OUTPUT_DIR=$(ROOT_DIR)\src\doxygen_output
 STANDARD_DEVIATION_NAME=StandardDeviation
 STANDARD_DEVIATION_DIR=$(ROOT_DIR)\src\$(STANDARD_DEVIATION_NAME)
 
-.PHONY: all build pack clean test build_test nuget_test doc run
+INSTALLER_NAME=Setup
+INSTALLER_DIR=$(ROOT_DIR)\src\$(INSTALLER_NAME)
+INSTALLER_FILE=$(INSTALLER_DIR)\$(INSTALLER_NAME).vdproj
+
+.PHONY: all build pack installer clean test build_test nuget_test doc run
 
 # default target => build project
 all: build
 
 # build Release project
 build:
-	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(PROJ_FILE)" /t:Rebuild /p:Configuration=Release
+	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(PROJ_FILE)" /t:Build /p:Configuration=Release
 
 # pack project
-pack: doc
+pack: doc installer
 	if exist "$(PACK_DIR)" del "$(PACK_DIR)" /f /s /q 1>nul & rmdir "$(PACK_DIR)" /s /q
 	mkdir "$(PACK_DIR)"
 
@@ -62,7 +67,7 @@ pack: doc
 	xcopy /s "$(DOC_OUTPUT_DIR)\html" "$(PACK_DOC_DIR)"
 
 	mkdir "$(PACK_INSTALL_DIR)"
-# TODO: copy installer
+	xcopy /s "$(INSTALLER_DIR)\Release" "$(PACK_INSTALL_DIR)"
 
 	mkdir "$(PACK_REPO_DIR)"
 	make clean
@@ -74,9 +79,13 @@ pack: doc
 	del "$(PACK_DIR)" /f /s /q 1>nul
 	rmdir "$(PACK_DIR)" /s /q
 
+installer: nuget_test
+# bug in Visual Studio 2017 see http://www.kunal-chowdhury.com/2016/07/visual-studio-error-code-8000000A.html#RY4kZKbC2JYg4vVG.97
+	cd "$(VISUAL_STUIDO_PATH)" & $(DEVENV) "$(INSTALLER_FILE)" /build Release
+
 # clean all temp files
 FILES_TO_REMOVE="$(ROOT_DIR)\Calculator.sln.DotSettings.user" "$(PROJ_DIR)\$(PROJ_NAME).csproj.user" "$(TESTS_DIR)\$(TESTS_NAME).csproj.user" "$(STANDARD_DEVIATION_DIR)\$(STANDARD_DEVIATION_NAME).csproj.user"
-DIRS_TO_REMOVE="$(ROOT_DIR)\.vs" "$(PACKAGES_DIR)" "$(TEST_RESULT_DIR)" "$(DOC_OUTPUT_DIR)" "$(PROJ_DIR)\bin" "$(PROJ_DIR)\obj" "$(TESTS_DIR)\bin" "$(TESTS_DIR)\obj" "$(STANDARD_DEVIATION_DIR)\bin" "$(STANDARD_DEVIATION_DIR)\obj"
+DIRS_TO_REMOVE="$(ROOT_DIR)\.vs" "$(PACKAGES_DIR)" "$(TEST_RESULT_DIR)" "$(DOC_OUTPUT_DIR)" "$(PROJ_DIR)\bin" "$(PROJ_DIR)\obj" "$(TESTS_DIR)\bin" "$(TESTS_DIR)\obj" "$(STANDARD_DEVIATION_DIR)\bin" "$(STANDARD_DEVIATION_DIR)\obj" "$(INSTALLER_DIR)\Debug" "$(INSTALLER_DIR)\Release"
 clean:
 	for %%f in ($(FILES_TO_REMOVE)) do ( if exist %%f del %%f )
 	for %%d in ($(DIRS_TO_REMOVE)) do ( if exist %%d del %%d /f /s /q 1>nul & rmdir %%d /s /q )
@@ -90,7 +99,7 @@ test: build_test
 
 # build test
 build_test: nuget_test
-	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(TESTS_FILE)" /t:Rebuild /p:Configuration=Debug
+	cd "$(VISUAL_STUIDO_PATH)" & $(MSBUILD) "$(TESTS_FILE)" /t:Build /p:Configuration=Debug
 
 # download nuget packages for test
 nuget_test:
