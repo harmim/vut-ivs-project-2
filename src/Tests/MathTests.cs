@@ -20,10 +20,10 @@ namespace Disassembler.Tests
 	[TestClass]
 	public class MathTests
 	{
-		// accuracy for tests with double numbers
+		/// Accuracy for tests with double numbers.
 		private const double Accuracy = 1e-6;
 
-		// Disassembler.Calculator.Math.Math object
+		/// Disassembler.Calculator.Math.Math object.
 		private readonly IMath math;
 
 		/// <summary>

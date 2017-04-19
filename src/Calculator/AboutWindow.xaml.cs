@@ -20,7 +20,8 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public partial class AboutWindow : Window
 	{
-		private const string DocPath = "\\doc\\doc.pdf";
+		/// Documentation path.
+		private const string DocPath = "\\doc\\documentation.pdf";
 
 		/// <summary>
 		///     AboutWindow construct.

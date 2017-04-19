@@ -17,7 +17,7 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public class MathProcessor
 	{
-		// math operators
+		/// Math operators.
 		private enum Operator
 		{
 			None,
@@ -31,19 +31,22 @@ namespace Disassembler.Calculator
 			Log
 		}
 
-		// result of calculation
+		/// Result of calculation.
 		private static double result;
 
-		// selected math operator
+		/// Selected math operator.
 		private static Operator selectedOperator = Operator.None;
 
-		// output result processor
-		private readonly OutputProcessor outputProcessor;
+		/// Waiting for next number flag (if true, then skip calculation).
+		public static bool WaitingForNumber;
 
-		// Disassembler marh library
+		/// Disassembler marh library.
 		private readonly Math.Math math;
 
-		// memory
+		/// Output result processor.
+		private readonly OutputProcessor outputProcessor;
+
+		/// Memory.
 		private double memory;
 
 		/// <summary>
@@ -63,6 +66,7 @@ namespace Disassembler.Calculator
 		{
 			result = 0.0;
 			selectedOperator = Operator.None;
+			WaitingForNumber = false;
 		}
 
 		/// <summary>
@@ -180,7 +184,7 @@ namespace Disassembler.Calculator
 		{
 			this.outputProcessor.PrintLog("!");
 			this.outputProcessor.ResultInLog = true;
-			this.CalculateResult(ans);
+			this.CalculateResult(ans, false);
 			selectedOperator = Operator.Fact;
 		}
 
@@ -221,8 +225,16 @@ namespace Disassembler.Calculator
 		///     Calculate result.
 		/// </summary>
 		/// <param name="ans">Answer in double.</param>
-		public void CalculateResult(double ans)
+		/// <param name="waitingForNumber">Set to MathProcessor.WaitingForNumber after calculation.</param>
+		/// <param name="clear">Clear result and log after calculation.</param>
+		public void CalculateResult(double ans, bool waitingForNumber = true, bool clear = false)
 		{
+			// if waiting for next number, then do not calculate result
+			if (WaitingForNumber)
+			{
+				return;
+			}
+
 			try
 			{
 				switch (selectedOperator)
@@ -256,11 +268,11 @@ namespace Disassembler.Calculator
 						break;
 
 					case Operator.Root:
-						result = this.math.Root(result, ans);
+						result = this.math.Root(ans, result);
 						break;
 
 					case Operator.Log:
-						result = this.math.Log(ans, result);
+						result = this.math.Log(result, ans);
 						break;
 				}
 			}
@@ -275,6 +287,13 @@ namespace Disassembler.Calculator
 			}
 
 			this.outputProcessor.PrintAns(result);
+			WaitingForNumber = waitingForNumber;
+
+			if (clear)
+			{
+				this.outputProcessor.ClearLog();
+				ClearResult();
+			}
 		}
 	}
 }

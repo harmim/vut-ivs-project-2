@@ -10,7 +10,6 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Disassembler.Calculator
@@ -20,26 +19,32 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public class OutputProcessor
 	{
-		// TextAns TextBox properties
+		/// Maximum number of chars in TextAns.
 		private const int TextAnsMaxLength = 20;
+		/// Limit for basic font size for TextAns, then then reduced.
 		private const int TextAnsBasicFontLimit = 14;
+		/// Basic font size for TextAns.
 		private const double TextAnsBasicFontSize = 42.0;
+		/// Constant for reduction of font size of TextAns.
 		private const double TextAnsValueOfFontSizeReduction = 2.5;
 
-		// culture
+		/// Culture.
 		private const string Culture = "cs-CZ";
 
-		// TextAns TextBox
+		/// TextAns TextBox.
 		private readonly TextBox textAns;
 
-		// TextLog TextBox
+		/// TextLog TextBox.
 		private readonly TextBox textLog;
 
-		// indicates whether the result is displayed
-		public bool IsAnswer { get; set; } = true;
+		/// Indicates whether the result is displayed.
+		public bool IsAnswer = true;
 
-		// indicates whether the memory operator is used
-		public bool IsMemoryOperator { get; set; } = true;
+		/// Indicates whether the memory operator is used.
+		public bool IsMemoryOperator = true;
+
+		/// Indicates whether the result is displayed in log (eg. factorial).
+		public bool ResultInLog;
 
 		/// <summary>
 		///     OutputProcessor construct.
@@ -55,9 +60,6 @@ namespace Disassembler.Calculator
 			this.textAns.MaxLength = TextAnsMaxLength + 2;
 			this.textAns.FontSize = TextAnsBasicFontSize;
 		}
-
-		// indicates whether the result is displayed in log (eg. factorial)
-		public bool ResultInLog { get; set; }
 
 		/// <summary>
 		///     Print number to TextAns TextBox in proper format.
@@ -81,7 +83,7 @@ namespace Disassembler.Calculator
 			this.ResultInLog = false;
 
 			// max length was reached
-			if (this.textAns.Text.Length > TextAnsMaxLength)
+			if (this.textAns.Text.Length > TextAnsMaxLength && !this.IsAnswer)
 			{
 				return false;
 			}
@@ -99,6 +101,7 @@ namespace Disassembler.Calculator
 			this.FixAnsFontSize();
 			this.IsAnswer = false;
 			this.IsMemoryOperator = false;
+			MathProcessor.WaitingForNumber = false;
 
 			return true;
 		}
@@ -118,6 +121,7 @@ namespace Disassembler.Calculator
 			}
 
 			this.IsAnswer = false;
+			MathProcessor.WaitingForNumber = false;
 		}
 
 		/// <summary>
@@ -180,12 +184,13 @@ namespace Disassembler.Calculator
 				this.textLog.Text += (this.ResultInLog ? "" : this.textAns.Text) + " " + operation + " ";
 			}
 
-			this.textLog.CaretIndex = this.textLog.Text.Length;
-			Rect rect = this.textLog.GetRectFromCharacterIndex(this.textLog.CaretIndex);
-			this.textLog.ScrollToHorizontalOffset(rect.Right);
+			this.textLog.ScrollToHorizontalOffset(this.textLog.Text.Length * this.textLog.FontSize);
 			this.ResultInLog = false;
 		}
 
+		/// <summary>
+		///     Prints error message to text answer.
+		/// </summary>
 		public void PrintError()
 		{
 			this.textAns.Text = "Error";
@@ -311,12 +316,13 @@ namespace Disassembler.Calculator
 		private void FixAnsFontSize()
 		{
 			// remove non numeric chars, expect spaces
-			string textAnsText = Utils.RemoveChars(this.textAns.Text, new[] { ',', '-' });
+			string textAnsText = Utils.RemoveChars(this.textAns.Text, new[] {',', '-'});
 			double size = TextAnsBasicFontSize;
 
 			if (textAnsText.Length > TextAnsBasicFontLimit)
 			{
-				size -= TextAnsValueOfFontSizeReduction * (textAnsText.Length - TextAnsBasicFontLimit) * ((100 - (textAnsText.Length - TextAnsBasicFontLimit) * 2) / 100.0);
+				size -= TextAnsValueOfFontSizeReduction * (textAnsText.Length - TextAnsBasicFontLimit) *
+						((100 - (textAnsText.Length - TextAnsBasicFontLimit) * 2) / 100.0);
 			}
 
 			this.textAns.FontSize = size;

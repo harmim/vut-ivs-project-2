@@ -18,13 +18,13 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		// TextLog properties
+		/// TextLog scroll offsset.
 		private const double TextLogScrollOffset = 15.0;
 
-		// math operations processor
+		/// Math operations processor.
 		private readonly MathProcessor mathProcessor;
 
-		// output result processor
+		/// Output result processor.
 		private readonly OutputProcessor outputProcessor;
 
 		/// <summary>
@@ -98,9 +98,7 @@ namespace Disassembler.Calculator
 		/// <param name="e">RoutedEventArgs.</param>
 		private void ButtonAns_Click(object sender, RoutedEventArgs e)
 		{
-			this.mathProcessor.CalculateResult(this.GetNumericAns());
-			this.outputProcessor.ClearLog();
-			MathProcessor.ClearResult();
+			this.mathProcessor.CalculateResult(this.GetNumericAns(), false, true);
 		}
 
 		/// <summary>
@@ -300,7 +298,7 @@ namespace Disassembler.Calculator
 			// calculate result
 			if (e.Key == Key.Enter || e.Key == Key.Return || !shiftPressed && e.Key == Key.OemPlus)
 			{
-				this.mathProcessor.CalculateResult(this.GetNumericAns());
+				this.mathProcessor.CalculateResult(this.GetNumericAns(), false, true);
 			}
 
 			// remove last number
