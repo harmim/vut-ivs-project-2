@@ -7,6 +7,8 @@
  *            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
  **************************************************************/
 
+using System;
+
 namespace Disassembler.Calculator.Math
 {
 	/// <summary>
@@ -36,6 +38,7 @@ namespace Disassembler.Calculator.Math
 		/// <param name="divident">Divident.</param>
 		/// <param name="divisor">Divisor.</param>
 		/// <returns>The result of the division.</returns>
+		/// <exception cref="DivideByZeroException"></exception>
 		double Div(double divident, double divisor);
 
 		/// <summary>
@@ -51,6 +54,7 @@ namespace Disassembler.Calculator.Math
 		/// </summary>
 		/// <param name="num">Factoriated number.</param>
 		/// <returns>Factorial from the number.</returns>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
 		ulong Fact(double num);
 
 		/// <summary>
@@ -59,6 +63,7 @@ namespace Disassembler.Calculator.Math
 		/// <param name="basis">Base.</param>
 		/// <param name="exponent">Exponent.</param>
 		/// <returns>Returns a specified number raised to the specified power.</returns>
+		/// <exception cref="NotFiniteNumberException"></exception>
 		double Pow(double basis, double exponent);
 
 		/// <summary>
@@ -67,6 +72,7 @@ namespace Disassembler.Calculator.Math
 		/// <param name="radicand">Radicand.</param>
 		/// <param name="degree">Degree.</param>
 		/// <returns>Returns the n-th root of a specified number.</returns>
+		/// <exception cref="DivideByZeroException"></exception>
 		double Root(double radicand, double degree);
 
 		/// <summary>
@@ -75,6 +81,7 @@ namespace Disassembler.Calculator.Math
 		/// <param name="basis">Base.</param>
 		/// <param name="antilogarithm">Antilogarithm.</param>
 		/// <returns>Returns the logarithm of a specified number in a specified base.</returns>
+		/// <exception cref="NotFiniteNumberException"></exception>
 		double Log(double basis, double antilogarithm);
 	}
 }

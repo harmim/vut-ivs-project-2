@@ -7,6 +7,7 @@
  *            Matej Havlas <xhavla06@stud.fit.vutbr.cz>
  **************************************************************/
 
+using System;
 using System.Windows.Controls;
 
 namespace Disassembler.Calculator
@@ -16,7 +17,7 @@ namespace Disassembler.Calculator
 	/// </summary>
 	public class MathProcessor
 	{
-		// math operators
+		/// Math operators.
 		private enum Operator
 		{
 			None,
@@ -30,16 +31,22 @@ namespace Disassembler.Calculator
 			Log
 		}
 
-		// result of calculation
+		/// Result of calculation.
 		private static double result;
 
-		// selected math operator
+		/// Selected math operator.
 		private static Operator selectedOperator = Operator.None;
 
-		// output result processor
+		/// Waiting for next number flag (if true, then skip calculation).
+		public static bool WaitingForNumber;
+
+		/// Disassembler marh library.
+		private readonly Math.Math math;
+
+		/// Output result processor.
 		private readonly OutputProcessor outputProcessor;
 
-		// memory
+		/// Memory.
 		private double memory;
 
 		/// <summary>
@@ -49,6 +56,7 @@ namespace Disassembler.Calculator
 		public MathProcessor(OutputProcessor outputProcessor)
 		{
 			this.outputProcessor = outputProcessor;
+			this.math = new Math.Math();
 		}
 
 		/// <summary>
@@ -58,6 +66,7 @@ namespace Disassembler.Calculator
 		{
 			result = 0.0;
 			selectedOperator = Operator.None;
+			WaitingForNumber = false;
 		}
 
 		/// <summary>
@@ -89,8 +98,7 @@ namespace Disassembler.Calculator
 		/// <param name="value">Value to sum with memory.</param>
 		public void SumMemory(Button clear, Button reset, double value)
 		{
-			// TODO use Math.Sum method
-			this.memory += value;
+			this.memory = this.math.Sum(this.memory, value);
 			clear.IsEnabled = true;
 			reset.IsEnabled = true;
 			this.outputProcessor.IsMemoryOperator = true;
@@ -104,8 +112,7 @@ namespace Disassembler.Calculator
 		/// <param name="value">Value to subtract from memory.</param>
 		public void SubMemory(Button clear, Button reset, double value)
 		{
-			// TODO use Math.Sub method
-			this.memory -= value;
+			this.memory = this.math.Sub(this.memory, value);
 			clear.IsEnabled = true;
 			reset.IsEnabled = true;
 			this.outputProcessor.IsMemoryOperator = true;
@@ -177,7 +184,7 @@ namespace Disassembler.Calculator
 		{
 			this.outputProcessor.PrintLog("!");
 			this.outputProcessor.ResultInLog = true;
-			this.CalculateResult(ans);
+			this.CalculateResult(ans, false);
 			selectedOperator = Operator.Fact;
 		}
 
@@ -218,10 +225,75 @@ namespace Disassembler.Calculator
 		///     Calculate result.
 		/// </summary>
 		/// <param name="ans">Answer in double.</param>
-		public void CalculateResult(double ans)
+		/// <param name="waitingForNumber">Set to MathProcessor.WaitingForNumber after calculation.</param>
+		/// <param name="clear">Clear result and log after calculation.</param>
+		public void CalculateResult(double ans, bool waitingForNumber = true, bool clear = false)
 		{
-			// TODO
+			// if waiting for next number, then do not calculate result
+			if (WaitingForNumber)
+			{
+				return;
+			}
+
+			try
+			{
+				switch (selectedOperator)
+				{
+					case Operator.None:
+						result = ans;
+						break;
+
+					case Operator.Sum:
+						result = this.math.Sum(result, ans);
+						break;
+
+					case Operator.Sub:
+						result = this.math.Sub(result, ans);
+						break;
+
+					case Operator.Mult:
+						result = this.math.Mult(result, ans);
+						break;
+
+					case Operator.Div:
+						result = this.math.Div(result, ans);
+						break;
+
+					case Operator.Fact:
+						result = this.math.Fact(ans);
+						break;
+
+					case Operator.Pow:
+						result = this.math.Pow(result, ans);
+						break;
+
+					case Operator.Root:
+						result = this.math.Root(ans, result);
+						break;
+
+					case Operator.Log:
+						result = this.math.Log(result, ans);
+						break;
+				}
+			}
+			catch (Exception)
+			{
+				this.outputProcessor.ClearAns();
+				this.outputProcessor.ClearLog();
+				ClearResult();
+				this.outputProcessor.PrintError();
+
+				return;
+			}
+
 			this.outputProcessor.PrintAns(result);
+			WaitingForNumber = waitingForNumber;
+
+			if (clear)
+			{
+				this.outputProcessor.ClearLog();
+				ClearResult();
+			}
 		}
 	}
 }

@@ -59,6 +59,7 @@ namespace Disassembler
 		///     Read numbers from STDIN.
 		/// </summary>
 		/// <returns>Parsed numbers in list of double values.</returns>
+		/// <exception cref="InvalidDataException"></exception>
 		private static List<double> ReadNumbers()
 		{
 			List<double> numbers = new List<double>();
@@ -101,6 +102,7 @@ namespace Disassembler
 		/// </summary>
 		/// <param name="numbers">List of numbers to calculate standard deviation.</param>
 		/// <returns>Standard deviation of given numbers.</returns>
+		/// <exception cref="ArgumentException"></exception>
 		private static double CalculateStandardDeviation(List<double> numbers)
 		{
 			int n = numbers.Count;

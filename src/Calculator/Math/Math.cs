@@ -11,6 +11,10 @@ using System;
 
 namespace Disassembler.Calculator.Math
 {
+	/// <summary>
+	///    Implementation of IMath.
+	/// <see cref="IMath"/>
+	/// </summary>
 	public class Math : IMath
 	{
 		public double Sum(double num1, double num2)
