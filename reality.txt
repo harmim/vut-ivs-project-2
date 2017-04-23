@@ -1,3 +1,1 @@
 In the last weeks, we didn´t manage to hold the deadlines.
-Mockup GUI doesn´t fit the task.
-User documentation isn´t specified enough.

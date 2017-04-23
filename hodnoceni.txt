@@ -1,4 +1,4 @@
 xharmi00 100 (project plan, initialize project, tests for math library, standard deviation, link GUI Interface with Math library, profiling standard deviation, makefile)
 xhalas10 100 (GUI interface, implementation of math library, link GUI Interface with Math library, program documentation in Doxygen)
-xhavla06 32 (implementation of math library, mockup GUI)
+xhavla06 90 (implementation of math library, mockup GUI, user documentation)
 xhertl04 100 (readme, interface for math library, tests for math library, standard deviation, application un/installer)
